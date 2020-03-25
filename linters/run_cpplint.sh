@@ -1,0 +1,1 @@
+cpplint --filter=-legal/copyright `find -regex '\(.*[.]cpp\|.*[.]h\)'`
