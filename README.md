@@ -1,8 +1,6 @@
-# tp_adv_cpp_course
+# Homework 1
 
-## Homework 1
-
-### Task
+## Task
 
 Нужно реализовать класс Process, согласно интерфейсу.
 Класс представляет собой процесс операционной системы
@@ -19,7 +17,7 @@ Linux.
 Все исключительные ситуации должны быть корректно
 описаны и передавать управление вызывающему коду
 
-### Process inteface
+## Process inteface
 
 ```cpp
 #ifndef PROCESS_H
@@ -45,7 +43,7 @@ public:
 #endif //PROCESS_H
 ```
 
-### Implementation progress
+## Implementation progress
 
 - [ ] explicit Process(const std::string& path);
 - [ ] ~Process();
