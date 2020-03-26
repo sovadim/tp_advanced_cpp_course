@@ -17,20 +17,25 @@ int main(int argc, char** argv) {
         exit(EXIT_FAILURE);
     }
 
-    proc->write(NULL, 0);
-
     std::string buffer;
-    while (std::getline(std::cin, buffer)) {
-        proc->write(NULL, 0);
-        std::cout << "sent: " << buffer << std::endl;
-        
-        proc->read(NULL, 0);
-        std::cout << "received: " << buffer << std::endl;
-        // write(pipe_parent->get_stdout_fd(), buffer.c_str(), sizeof(buf));
-        // printf("sent: %s\n", buffer.c_str());
-        // read(pipe_child->get_stdin_fd(), buf, sizeof(buf));
-        // printf("received: %s\n", buf);
+    void* void_buffer;
+
+    try {
+        while (std::getline(std::cin, buffer)) {
+            std::cout << "echo: " << buffer.c_str() << std::endl;
+            proc->write(buffer.c_str(), buffer.size());
+            
+            size_t bytes = proc->read(void_buffer, buffer.size());
+            // std::cout << "received: " << (char *)void_buffer << std::endl;
+            // std::cout << "bytes: " << bytes << std::endl;
+        }
+    } catch(std::exception& e) {
+        std::cerr << e.what() <<std::endl;
     }
+
+    std::cerr << "Eof received, stop" << std::endl;
+
+    proc->terminate();
 
     delete proc;
 

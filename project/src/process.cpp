@@ -10,6 +10,14 @@
 
 namespace process {
 
+const char* Process_exception::what() const throw() {
+    return "Process failed";
+}
+
+const char* Proc_io_exception::what() const throw() {
+    return "Read/Write error";
+}
+
 Process::Process(const std::string& executable) {
     this->executable = executable;
 
@@ -19,12 +27,15 @@ Process::Process(const std::string& executable) {
     readable_state = true;
 
     pid = fork();
-    if (-1 == pid)
-        std::cout << "Bad pid number" << std::endl;
+
+    if (-1 == pid) {
+        std::cerr << "Bad pid number" << std::endl;
+        terminate();
+        throw Process_exception();
+    }
 
     if (0 == pid) {
         /* Child process */
-        std::cout << "Child" << std::endl;
         try {
             pipe_parent->close_stdout();
             pipe_child->close_stdin();
@@ -45,6 +56,7 @@ Process::Process(const std::string& executable) {
 
 Process::~Process() noexcept {
     try {
+        close();
         terminate();
     } catch(const std::exception& e) {
         std::cerr << e.what() << std::endl;
@@ -52,20 +64,12 @@ Process::~Process() noexcept {
 }
 
 size_t Process::write(const void* data, size_t len) {
-    char buf[256];
-
-    std::string buffer;
-    while (std::getline(std::cin, buffer)) {
-        // TODO: c++ file io
-        // TODO: remove buf
-        ::write(pipe_parent->get_stdout_fd(), buffer.c_str(), sizeof(buf));
-        printf("sent: %s\n", buffer.c_str());
-        ::read(pipe_child->get_stdin_fd(), buf, sizeof(buf));
-        printf("received: %s\n", buf);
+    ssize_t bytes = ::write(pipe_parent->get_stdout_fd(), (char *)data, len);
+    if (bytes < 0) {
+        std::cerr << "Process: write error" << std::endl;
+        throw Proc_io_exception();
     }
-
-    std::cerr << "Eof received, stop" << std::endl;
-    return 0;
+    return bytes;
 }
 
 void Process::writeExact(const void* data, size_t len) {
@@ -73,7 +77,19 @@ void Process::writeExact(const void* data, size_t len) {
 }
 
 size_t Process::read(void* data, size_t len) {
-    return 0;
+
+    char buf[255];
+    ssize_t bytes = ::read(pipe_child->get_stdin_fd(), buf, len);
+    // ssize_t bytes = ::read(pipe_child->get_stdin_fd(), data, len);
+    std::cerr << bytes << std::endl;
+    if (bytes < 0) {
+        std::cerr << "Process: read error" << std::endl;
+        throw Proc_io_exception();
+    }
+    printf("received: %s\n", buf);
+    printf("bytes: %zu\n", bytes);
+
+    return bytes;
 }
 
 void Process::readExact(void* data, size_t len) {
@@ -85,8 +101,8 @@ bool Process::isReadable() const {
 }
 
 void Process::closeStdin() {
-    ::close(pipe_child->get_stdin_fd);
-    ::close(pipe_parent->get_stdout_fd);
+    ::close(pipe_child->get_stdin_fd());
+    ::close(pipe_parent->get_stdout_fd());
     readable_state = false;
 }
 
@@ -99,6 +115,7 @@ void Process::close() {
 }
 
 void Process::terminate() {
+    close();
     if (-1 == kill(pid, SIGTERM))
         std::cerr << "Error, signal not sent" << std::endl;
 

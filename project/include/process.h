@@ -2,10 +2,19 @@
 #define PROJECT_INCLUDE_PROCESS_H_
 
 #include <string>
+#include <exception>
 #include "pipe.h"
 
 namespace process
 {
+
+class Process_exception: public std::exception {
+   virtual const char* what() const throw();
+};
+
+class Proc_io_exception: public std::exception {
+   virtual const char* what() const throw();
+};
 
 class Process {
  public:
