@@ -16,11 +16,14 @@ Process::Process(const std::string& executable) {
     pipe_parent = new process::Pipe();
     pipe_child  = new process::Pipe();
 
+    readable_state = true;
+
     pid = fork();
     if (-1 == pid)
         std::cout << "Bad pid number" << std::endl;
 
     if (0 == pid) {
+        /* Child process */
         std::cout << "Child" << std::endl;
         try {
             pipe_parent->close_stdout();
@@ -37,22 +40,6 @@ Process::Process(const std::string& executable) {
             std::cerr << "Child process failed" << std::endl;
             _exit(EXIT_FAILURE);
         }
-    } else {
-        std::cout << "Parent" << std::endl;
-
-        char buf[256];
-
-        std::string buffer;
-        while (std::getline(std::cin, buffer)) {
-            // TODO: c++ file io
-            // TODO: remove buf
-            ::write(pipe_parent->get_stdout_fd(), buffer.c_str(), sizeof(buf));
-            printf("sent: %s\n", buffer.c_str());
-            ::read(pipe_child->get_stdin_fd(), buf, sizeof(buf));
-            printf("received: %s\n", buf);
-        }
-
-        std::cerr << "Eof received, stop" << std::endl;   
     }
 }
 
@@ -65,7 +52,19 @@ Process::~Process() noexcept {
 }
 
 size_t Process::write(const void* data, size_t len) {
+    char buf[256];
 
+    std::string buffer;
+    while (std::getline(std::cin, buffer)) {
+        // TODO: c++ file io
+        // TODO: remove buf
+        ::write(pipe_parent->get_stdout_fd(), buffer.c_str(), sizeof(buf));
+        printf("sent: %s\n", buffer.c_str());
+        ::read(pipe_child->get_stdin_fd(), buf, sizeof(buf));
+        printf("received: %s\n", buf);
+    }
+
+    std::cerr << "Eof received, stop" << std::endl;
     return 0;
 }
 
@@ -82,15 +81,21 @@ void Process::readExact(void* data, size_t len) {
 }
 
 bool Process::isReadable() const {
-    return 0;
+    return readable_state;
 }
 
 void Process::closeStdin() {
-
+    ::close(pipe_child->get_stdin_fd);
+    ::close(pipe_parent->get_stdout_fd);
+    readable_state = false;
 }
 
 void Process::close() {
-
+    ::close(pipe_child->get_stdin_fd());
+    ::close(pipe_child->get_stdout_fd());
+    ::close(pipe_child->get_stdin_fd());
+    ::close(pipe_child->get_stdout_fd());
+    readable_state = false;
 }
 
 void Process::terminate() {

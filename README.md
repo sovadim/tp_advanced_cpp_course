@@ -45,12 +45,12 @@ public:
 
 ## Implementation progress
 
-- [ ] explicit Process(const std::string& path);
-- [ ] ~Process();
+- [x] explicit Process(const std::string& path);
+- [x] ~Process();
 - [ ] size_t write(const void* data, size_t len);
 - [ ] void writeExact(const void* data, size_t len);
 - [ ] size_t read(void* data, size_t len);
 - [ ] void readExact(void* data, size_t len);
-- [ ] bool isReadable() const;
-- [ ] void closeStdin();
-- [ ] void close();
+- [x] bool isReadable() const;
+- [x] void closeStdin();
+- [x] void close();

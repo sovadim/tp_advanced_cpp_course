@@ -32,6 +32,8 @@ class Process {
    
    pid_t pid;
 
+   bool readable_state;
+
    /* Path to program to execute */
    std::string executable;
 };

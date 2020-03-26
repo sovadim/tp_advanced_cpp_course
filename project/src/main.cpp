@@ -17,14 +17,20 @@ int main(int argc, char** argv) {
         exit(EXIT_FAILURE);
     }
 
-    // std::string buffer;
-    // while (std::getline(std::cin, buffer)) {
+    proc->write(NULL, 0);
 
-    //     // write(pipe_parent->get_stdout_fd(), buffer.c_str(), sizeof(buf));
-    //     // printf("sent: %s\n", buffer.c_str());
-    //     // read(pipe_child->get_stdin_fd(), buf, sizeof(buf));
-    //     // printf("received: %s\n", buf);
-    // }
+    std::string buffer;
+    while (std::getline(std::cin, buffer)) {
+        proc->write(NULL, 0);
+        std::cout << "sent: " << buffer << std::endl;
+        
+        proc->read(NULL, 0);
+        std::cout << "received: " << buffer << std::endl;
+        // write(pipe_parent->get_stdout_fd(), buffer.c_str(), sizeof(buf));
+        // printf("sent: %s\n", buffer.c_str());
+        // read(pipe_child->get_stdin_fd(), buf, sizeof(buf));
+        // printf("received: %s\n", buf);
+    }
 
     delete proc;
 
