@@ -8,7 +8,6 @@ project (process)
 set(SOURCES
     src/process.cpp
     src/main.cpp
-    src/tsv.cpp
     src/pipe.cpp
 )
 
