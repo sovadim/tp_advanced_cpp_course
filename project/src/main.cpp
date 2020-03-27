@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string> // remove
+#include <string>
 #include <exception>
 #include "process.h"
 #include "pipe.h"
@@ -24,17 +24,30 @@ int main(int argc, char** argv) {
         while (std::getline(std::cin, buffer)) {
             char* void_buffer = new char[buffer.size()];
 
-            proc->writeExact(buffer.c_str(), buffer.size());
-            std::cout << "sent: " << buffer.c_str() << std::endl;
-            // std::cout << "bytes sent: " << bytes << std::endl;
+            std::cout << "----------------" << std::endl;
+            std::cout << "=== write / read ===" << std::endl;
+
+            bytes = proc->write(buffer.c_str(), buffer.size());
+            std::cout << "sent:" << std::endl;
+            std::cout << "- data: " << buffer << std::endl;
+            std::cout << "- bytes: " << bytes << std::endl;
             
-            proc->read(void_buffer, buffer.size());
-            std::cout << "received: " << void_buffer << std::endl;
-            // std::cout << "bytes received: " << bytes << std::endl;
+            bytes = proc->read(void_buffer, buffer.size());
+            std::cout << "received:" << std::endl;
+            std::cout << "- data: " << void_buffer << std::endl;
+            std::cout << "- bytes: " << bytes << std::endl;
 
+            std::cout << "\n=== writeExact / readExact ===" << std::endl;
+
+            proc->writeExact(buffer.c_str(), buffer.size());
+            std::cout << "sent:" << buffer << std::endl;
+            
+            proc->readExact(void_buffer, buffer.size());
+            std::cout << "received:" << void_buffer << std::endl;
+
+            std::cout << "----------------" << std::endl;
+            
             delete [] void_buffer;
-
-            std::cout << "---------------" << std::endl;
         }
     } catch(std::exception& e) {
         std::cerr << e.what() <<std::endl;
