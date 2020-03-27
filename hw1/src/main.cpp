@@ -18,11 +18,11 @@ int main(int argc, char** argv) {
     }
 
     std::string buffer;
-    size_t bytes;
 
     try {
         while (std::getline(std::cin, buffer)) {
             char* void_buffer = new char[buffer.size()];
+            size_t bytes;
 
             std::cout << "----------------" << std::endl;
             std::cout << "=== write / read ===" << std::endl;

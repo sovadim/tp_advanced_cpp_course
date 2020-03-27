@@ -73,10 +73,9 @@ size_t Process::write(const void* data, size_t len) {
 
 void Process::writeExact(const void* data, size_t len) {
     ssize_t byte_couter = 0;
-    ssize_t bytes;
     while (byte_couter != len) {
-        bytes = ::write(pipe_parent->get_stdout_fd(),
-                        data + byte_couter, len - byte_couter);
+        ssize_t bytes = ::write(pipe_parent->get_stdout_fd(),
+                                data + byte_couter, len - byte_couter);
         byte_couter += bytes;
         if (bytes < 0) {
             std::cerr << "Process: write error" << std::endl;
@@ -86,7 +85,7 @@ void Process::writeExact(const void* data, size_t len) {
 }
 
 size_t Process::read(void* data, size_t len) {
-    ssize_t bytes = ::read(pipe_child->get_stdin_fd(), data + 0, len);
+    ssize_t bytes = ::read(pipe_child->get_stdin_fd(), data, len);
     if (bytes < 0) {
         std::cerr << "Process: read error" << std::endl;
         throw Proc_io_exception();
@@ -96,11 +95,9 @@ size_t Process::read(void* data, size_t len) {
 
 void Process::readExact(void* data, size_t len) {
     ssize_t byte_couter = 0;
-    ssize_t bytes;
-
     while (byte_couter < len) {
-        bytes = ::read(pipe_child->get_stdin_fd(),
-                       data + byte_couter, len - byte_couter);
+        ssize_t bytes = ::read(pipe_child->get_stdin_fd(),
+                               data + byte_couter, len - byte_couter);
         byte_couter += bytes;
         if (bytes < 0) {
             std::cerr << "Process: read error" << std::endl;
