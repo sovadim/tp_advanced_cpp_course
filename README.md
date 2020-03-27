@@ -48,7 +48,7 @@ public:
 - [x] explicit Process(const std::string& path);
 - [x] ~Process();
 - [x] size_t write(const void* data, size_t len);
-- [ ] void writeExact(const void* data, size_t len);
+- [x] void writeExact(const void* data, size_t len);
 - [x] size_t read(void* data, size_t len);
 - [ ] void readExact(void* data, size_t len);
 - [x] bool isReadable() const;

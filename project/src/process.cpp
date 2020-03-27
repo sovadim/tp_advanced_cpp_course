@@ -1,7 +1,6 @@
 #include <string>
 #include <unistd.h>
 #include <iostream>
-#include <string.h>
 #include <sys/types.h>
 #include <signal.h>
 #include <sys/wait.h>
@@ -73,7 +72,17 @@ size_t Process::write(const void* data, size_t len) {
 }
 
 void Process::writeExact(const void* data, size_t len) {
-
+    size_t byte_couter = 0;
+    ssize_t bytes;
+    while (byte_couter != len) {
+        bytes = ::write(pipe_parent->get_stdout_fd(),
+                        data + byte_couter, len - byte_couter);
+        byte_couter += bytes;
+        if (bytes < 0) {
+            std::cerr << "Process: write error" << std::endl;
+            throw Proc_io_exception();
+        }
+    }
 }
 
 size_t Process::read(void* data, size_t len) {
@@ -86,7 +95,16 @@ size_t Process::read(void* data, size_t len) {
 }
 
 void Process::readExact(void* data, size_t len) {
-
+    size_t byte_couter = 0;
+    ssize_t bytes;
+    while (byte_couter != len) {
+        bytes = ::read(pipe_parent->get_stdin_fd(), data + byte_couter, 1);
+        byte_couter++;
+        if (bytes < 0) {
+            std::cerr << "Process: read error" << std::endl;
+            throw Proc_io_exception();
+        }
+    }
 }
 
 bool Process::isReadable() const {

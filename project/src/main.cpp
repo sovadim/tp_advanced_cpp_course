@@ -24,13 +24,13 @@ int main(int argc, char** argv) {
         while (std::getline(std::cin, buffer)) {
             char* void_buffer = new char[buffer.size()];
 
-            bytes = proc->write(buffer.c_str(), buffer.size());
+            proc->writeExact(buffer.c_str(), buffer.size());
             std::cout << "sent: " << buffer.c_str() << std::endl;
-            std::cout << "bytes sent: " << bytes << std::endl;
+            // std::cout << "bytes sent: " << bytes << std::endl;
             
-            bytes = proc->read(void_buffer, buffer.size());
+            proc->read(void_buffer, buffer.size());
             std::cout << "received: " << void_buffer << std::endl;
-            std::cout << "bytes received: " << bytes << std::endl;
+            // std::cout << "bytes received: " << bytes << std::endl;
 
             delete [] void_buffer;
 
