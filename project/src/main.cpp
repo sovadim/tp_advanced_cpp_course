@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string.h> // remove
+#include <string> // remove
 #include <exception>
 #include "process.h"
 #include "pipe.h"
@@ -18,16 +18,23 @@ int main(int argc, char** argv) {
     }
 
     std::string buffer;
-    void* void_buffer;
+    size_t bytes;
 
     try {
         while (std::getline(std::cin, buffer)) {
-            std::cout << "echo: " << buffer.c_str() << std::endl;
-            proc->write(buffer.c_str(), buffer.size());
+            char* void_buffer = new char[buffer.size()];
+
+            bytes = proc->write(buffer.c_str(), buffer.size());
+            std::cout << "sent: " << buffer.c_str() << std::endl;
+            std::cout << "bytes sent: " << bytes << std::endl;
             
-            size_t bytes = proc->read(void_buffer, buffer.size());
-            // std::cout << "received: " << (char *)void_buffer << std::endl;
-            // std::cout << "bytes: " << bytes << std::endl;
+            bytes = proc->read(void_buffer, buffer.size());
+            std::cout << "received: " << void_buffer << std::endl;
+            std::cout << "bytes received: " << bytes << std::endl;
+
+            delete [] void_buffer;
+
+            std::cout << "---------------" << std::endl;
         }
     } catch(std::exception& e) {
         std::cerr << e.what() <<std::endl;

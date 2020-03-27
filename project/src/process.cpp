@@ -56,15 +56,15 @@ Process::Process(const std::string& executable) {
 
 Process::~Process() noexcept {
     try {
-        close();
-        terminate();
+        this->close();
+        this->terminate();
     } catch(const std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
 }
 
 size_t Process::write(const void* data, size_t len) {
-    ssize_t bytes = ::write(pipe_parent->get_stdout_fd(), (char *)data, len);
+    ssize_t bytes = ::write(pipe_parent->get_stdout_fd(), data, len);
     if (bytes < 0) {
         std::cerr << "Process: write error" << std::endl;
         throw Proc_io_exception();
@@ -77,18 +77,11 @@ void Process::writeExact(const void* data, size_t len) {
 }
 
 size_t Process::read(void* data, size_t len) {
-
-    char buf[255];
-    ssize_t bytes = ::read(pipe_child->get_stdin_fd(), buf, len);
-    // ssize_t bytes = ::read(pipe_child->get_stdin_fd(), data, len);
-    std::cerr << bytes << std::endl;
+    ssize_t bytes = ::read(pipe_child->get_stdin_fd(), data, len);
     if (bytes < 0) {
         std::cerr << "Process: read error" << std::endl;
         throw Proc_io_exception();
     }
-    printf("received: %s\n", buf);
-    printf("bytes: %zu\n", bytes);
-
     return bytes;
 }
 
@@ -115,7 +108,7 @@ void Process::close() {
 }
 
 void Process::terminate() {
-    close();
+    this->close();
     if (-1 == kill(pid, SIGTERM))
         std::cerr << "Error, signal not sent" << std::endl;
 
