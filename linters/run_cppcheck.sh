@@ -1,1 +1,1 @@
-cppcheck project/src --enable=all --error-exitcode=1 --suppress=missingIncludeSystem
+cppcheck hw1/src --enable=all --error-exitcode=1 --suppress=missingIncludeSystem
