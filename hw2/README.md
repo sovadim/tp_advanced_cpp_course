@@ -9,6 +9,6 @@
 
 ## Class diagram
 
-![Class diagram](/images/pic1.png)
+![Class diagram](./images/pic1.png)
 
-![Class diagram 2](/images/pic2.png)
+![Class diagram 2](./images/pic2.png)
