@@ -14,6 +14,7 @@ int main(int argc, char** argv) {
     } catch (const std::exception& e) {
         std::cerr << "Error in process initialisation" << std::endl;
         std::cerr << e.what() << std::endl;
+        proc->terminate();
         exit(EXIT_FAILURE);
     }
 
@@ -23,6 +24,7 @@ int main(int argc, char** argv) {
         while (std::getline(std::cin, buffer)) {
             // TODO: use std::string
             char* void_buffer = new char[buffer.size()];
+            // std::string v_buf;
             size_t bytes;
 
             std::cout << "----------------" << std::endl;
@@ -32,7 +34,7 @@ int main(int argc, char** argv) {
             std::cout << "sent:" << std::endl;
             std::cout << "- data: " << buffer << std::endl;
             std::cout << "- bytes: " << bytes << std::endl;
-            
+
             bytes = proc->read(void_buffer, buffer.size());
             std::cout << "received:" << std::endl;
             std::cout << "- data: " << void_buffer << std::endl;
@@ -42,12 +44,12 @@ int main(int argc, char** argv) {
 
             proc->writeExact(buffer.c_str(), buffer.size());
             std::cout << "sent:" << buffer << std::endl;
-            
+
             proc->readExact(void_buffer, buffer.size());
             std::cout << "received:" << void_buffer << std::endl;
 
             std::cout << "----------------" << std::endl;
-            
+
             delete [] void_buffer;
         }
     } catch(std::exception& e) {

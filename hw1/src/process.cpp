@@ -1,9 +1,9 @@
-#include <string>
 #include <unistd.h>
-#include <iostream>
-#include <sys/types.h>
 #include <signal.h>
+#include <sys/types.h>
 #include <sys/wait.h>
+#include <string>
+#include <iostream>
 #include "process.h"
 #include "pipe.h"
 
@@ -18,27 +18,24 @@ const char* Proc_io_exception::what() const noexcept {
 }
 
 Process::Process(const std::string& executable) {
-    pipe_parent = new process::Pipe();
-    pipe_child  = new process::Pipe();
-
     is_readable = true;
 
     pid = fork();
 
     if (-1 == pid) {
-        std::cerr << "Bad pid number" << std::endl;
         terminate();
+        std::cerr << "Bad pid number" << std::endl;
         throw Process_exception();
     }
 
     if (0 == pid) {
         /* Child process */
         try {
-            pipe_parent->close_write();
-            pipe_child->close_read();
+            pipe_parent.close_write();
+            pipe_child.close_read();
 
-            pipe_parent->dup_read_fd(fileno(stdin));
-            pipe_child->dup_write_fd(fileno(stdout));
+            pipe_parent.dup_read_fd(fileno(stdin));
+            pipe_child.dup_write_fd(fileno(stdout));
         } catch(const std::exception& e) {
             std::cerr << "Child process failed:\n" << e.what() << std::endl;
             exit(EXIT_FAILURE);
@@ -49,8 +46,7 @@ Process::Process(const std::string& executable) {
             exit(EXIT_FAILURE);
         }
     } else {
-        // TODO:
-        // parent pipe to here
+        /* Parent process */
     }
 }
 
@@ -64,8 +60,7 @@ Process::~Process() noexcept {
 }
 
 size_t Process::write(const void* data, size_t len) {
-    // return ::write(pipe_parent->fd_[1], data, len);
-    return pipe_parent->write((char*)data, len);
+    return pipe_parent.write((char*)data, len);
 }
 
 void Process::writeExact(const void* data, size_t len) {
@@ -75,7 +70,7 @@ void Process::writeExact(const void* data, size_t len) {
 }
 
 size_t Process::read(void* data, size_t len) {
-    return pipe_child->read((char*)data, len);
+    return pipe_child.read((char*)data, len);
 }
 
 void Process::readExact(void* data, size_t len) {
@@ -89,13 +84,12 @@ bool Process::isReadable() const {
 }
 
 void Process::closeStdin() {
-    pipe_child->close_read();
-    pipe_parent->close_write();
+    pipe_child.close_read();
     is_readable = false;
 }
 
 void Process::close() {
-    pipe_child->close();
+    pipe_child.close();
     is_readable = false;
 }
 

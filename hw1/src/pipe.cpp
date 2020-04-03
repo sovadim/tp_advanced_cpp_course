@@ -1,8 +1,7 @@
 #include <unistd.h>
 #include "pipe.h"
 
-namespace process
-{
+namespace process {
 
 const char* Pipe_exception::what() const noexcept {
     return "Pipe failed";
@@ -17,7 +16,7 @@ Pipe::Pipe() {
 }
 
 Pipe::~Pipe() noexcept {
-    close();
+    try {close();} catch(std::exception& e) {}
 }
 
 size_t Pipe::read(char* data, size_t len) const {
