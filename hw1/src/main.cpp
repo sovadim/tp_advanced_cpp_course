@@ -21,6 +21,7 @@ int main(int argc, char** argv) {
 
     try {
         while (std::getline(std::cin, buffer)) {
+            // TODO: use std::string
             char* void_buffer = new char[buffer.size()];
             size_t bytes;
 

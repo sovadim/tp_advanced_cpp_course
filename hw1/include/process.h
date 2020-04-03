@@ -1,52 +1,50 @@
-#ifndef PROJECT_INCLUDE_PROCESS_H_
-#define PROJECT_INCLUDE_PROCESS_H_
+#ifndef PROCESS_H
+#define PROCESS_H
 
 #include <string>
 #include <exception>
+#include "ireadable.h"
+#include "iwritable.h"
 #include "pipe.h"
 
-namespace process
-{
+namespace process {
 
 class Process_exception: public std::exception {
-   virtual const char* what() const throw();
+	virtual const char* what() const noexcept;
 };
 
 class Proc_io_exception: public std::exception {
-   virtual const char* what() const throw();
+	virtual const char* what() const noexcept;
 };
 
-class Process {
+class Process: IWritable, IReadable {
  public:
-   /* Constructor invoke immediate start of process */
-   explicit Process(const std::string& executable);
-   ~Process() noexcept;
+	/* Constructor invoke immediate start of process */
+	explicit Process(const std::string& executable);
+	~Process() noexcept;
 
-   size_t write(const void* data, size_t len);
-   void writeExact(const void* data, size_t len);
-   size_t read(void* data, size_t len);
-   void readExact(void* data, size_t len);
+	size_t write(const void* data, size_t len);
+	void writeExact(const void* data, size_t len);
+	size_t read(void* data, size_t len);
+	void readExact(void* data, size_t len);
 
-   bool isReadable() const;
-   void closeStdin();
+	bool isReadable() const;
+	void closeStdin();
 
-   void close();
+	void close();
 
-   /* Child process termination */
-   void terminate();
+	/* Child process termination */
+	void terminate();
 
  private:
-   Pipe *pipe_parent;
-   Pipe *pipe_child;
-   
-   pid_t pid;
+	Pipe *pipe_parent;
+	Pipe *pipe_child;
 
-   bool readable_state;
+	pid_t pid;
 
-   /* Path to program to execute */
-   std::string executable;
+	bool is_readable;
 };
 
 }  // namespace process
 
-#endif  // PROJECT_INCLUDE_PROCESS_H_
+#endif  // PROCESS_H

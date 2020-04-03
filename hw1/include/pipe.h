@@ -7,25 +7,31 @@ namespace process
 {
 
 class Pipe_exception: public std::exception {
-   virtual const char* what() const throw();
+	virtual const char* what() const noexcept;
+};
+
+class Pipe_close_exception: public std::exception {
+	virtual const char* what() const noexcept;
 };
 
 class Pipe {
  public:
-   Pipe();
-   ~Pipe() noexcept;
+	Pipe();
+	~Pipe() noexcept;
 
-   int get_stdin_fd();
-   int get_stdout_fd();
+	size_t read(char* data, size_t len) const;
+	size_t write(char* data, size_t len) const;
 
-   void dup_stdin(int newfd);
-   void dup_stdout(int newfd);
+	void dup_read_fd(int newfd);
+	void dup_write_fd(int newfd);
 
-   void close_stdin();
-   void close_stdout();
+	void close();
+
+	void close_read();
+	void close_write();
 
  private:
-   int _fd[2];
+	int fd_[2];
 };
 
 }  // namespace process
