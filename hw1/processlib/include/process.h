@@ -37,6 +37,10 @@ class Process : IWritable, IReadable {
     void terminate() noexcept;
 
  private:
+    /* Copying of Process object is prohibited */
+    Process(Process const & p);
+    Process & operator=(Process const & p);
+
     Pipe pipe_parent;
     Pipe pipe_child;
 
