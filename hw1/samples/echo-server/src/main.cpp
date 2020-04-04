@@ -20,9 +20,8 @@ int main(int argc, char** argv) {
 
     try {
         while (std::getline(std::cin, buffer)) {
-            // TODO: use std::string
-            char* void_buffer = new char[buffer.size()];
-            // std::string v_buf;
+            std::string void_buffer;
+            void_buffer.resize(buffer.size());
             size_t bytes;
 
             std::cout << "----------------" << std::endl;
@@ -33,7 +32,7 @@ int main(int argc, char** argv) {
             std::cout << "- data: " << buffer << std::endl;
             std::cout << "- bytes: " << bytes << std::endl;
 
-            bytes = proc->read(void_buffer, buffer.size());
+            bytes = proc->read(&void_buffer[0], buffer.size());
             std::cout << "received:" << std::endl;
             std::cout << "- data: " << void_buffer << std::endl;
             std::cout << "- bytes: " << bytes << std::endl;
@@ -43,12 +42,10 @@ int main(int argc, char** argv) {
             proc->writeExact(buffer.c_str(), buffer.size());
             std::cout << "sent:" << buffer << std::endl;
 
-            proc->readExact(void_buffer, buffer.size());
+            proc->readExact(&void_buffer[0], buffer.size());
             std::cout << "received:" << void_buffer << std::endl;
 
             std::cout << "----------------" << std::endl;
-
-            delete [] void_buffer;
         }
     } catch(std::exception& e) {
         std::cerr << e.what() <<std::endl;
@@ -56,9 +53,7 @@ int main(int argc, char** argv) {
 
     std::cerr << "Eof received, stop" << std::endl;
 
-    try {
-        proc->close();
-    } catch(std::exception& e) {}
+    try { proc->close(); } catch(std::exception& e) {}
     proc->terminate();
 
     delete proc;
