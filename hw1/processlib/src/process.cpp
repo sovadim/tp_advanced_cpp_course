@@ -90,7 +90,7 @@ void Process::close() {
 void Process::terminate() noexcept {
     ::kill(pid, SIGTERM);
     int status;
-    if (pid != ::waitpid(pid, &status, 0));
+    ::waitpid(pid, &status, 0);
 }
 
 }  // namespace process
