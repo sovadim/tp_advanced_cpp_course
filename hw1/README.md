@@ -54,3 +54,13 @@ public:
 - [x] bool isReadable() const;
 - [x] void closeStdin();
 - [x] void close();
+
+## How to build
+
+```bash
+$ cd processlib
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+```
