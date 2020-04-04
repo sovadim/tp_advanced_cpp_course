@@ -4,7 +4,7 @@ add_compile_options(-O3)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_COMPILER g++)
 
-project(echoserver)
+project(echo-server)
 
 set(SOURCES src/main.cpp)
 
@@ -15,4 +15,7 @@ target_include_directories(${PROJECT_NAME}
         ${PROJECT_SOURCE_DIR}/../../processlib/include
 )
 
-target_link_libraries(${PROJECT_NAME} process ${PROJECT_SOURCE_DIR}/../../processlib/build/libprocess.so)
+add_library(process SHARED IMPORTED)
+set_target_properties(process PROPERTIES IMPORTED_LOCATION ${PROJECT_SOURCE_DIR}/../../processlib/build/libprocess.so)
+
+target_link_libraries(${PROJECT_NAME} process)
