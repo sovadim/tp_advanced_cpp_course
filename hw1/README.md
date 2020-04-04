@@ -57,10 +57,18 @@ public:
 
 ## How to build
 
+Build process library
+
 ```bash
 $ cd processlib
 $ mkdir build
 $ cd build
 $ cmake ..
 $ make
+```
+
+To build library and samples you run script used in ci
+```bash
+$ cd ..
+$ ./ci/hw1/build.sh
 ```

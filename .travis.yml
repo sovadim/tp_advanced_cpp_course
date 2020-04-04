@@ -13,3 +13,4 @@ install:
 
 script:
     - ./ci/hw1/linters.sh
+    - ./ci/hw1/build.sh
