@@ -18,8 +18,6 @@ const char* Proc_io_exception::what() const noexcept {
 }
 
 Process::Process(const std::string& executable) {
-    is_readable = true;
-
     pid = fork();
 
     if (-1 == pid) {
@@ -78,30 +76,21 @@ void Process::readExact(void* data, size_t len) {
 }
 
 bool Process::isReadable() const {
-    return is_readable;
+    return !pipe_parent.is_closed() && !pipe_child.is_closed();
 }
 
 void Process::closeStdin() {
     pipe_child.close_read();
-    is_readable = false;
 }
 
 void Process::close() {
     pipe_child.close();
-    is_readable = false;
 }
 
-void Process::terminate() {
-    if (-1 == kill(pid, SIGTERM))
-        std::cerr << "Error, signal not sent" << std::endl;
-
+void Process::terminate() noexcept {
+    ::kill(pid, SIGTERM);
     int status;
-    if (pid != ::waitpid(pid, &status, 0))
-        std::cerr << "Error occured when child process terminated" << std::endl;
-
-    if (!WIFSIGNALED(status)) {
-        std::cerr << "Child process terminated by error, not by signal" << std::endl;
-    }
+    if (pid != ::waitpid(pid, &status, 0));
 }
 
 }  // namespace process

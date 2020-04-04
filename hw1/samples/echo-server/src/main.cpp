@@ -58,17 +58,7 @@ int main(int argc, char** argv) {
 
     try {
         proc->close();
-    } catch(std::exception& e) {
-        if (errno == EBADF)
-            std::cerr << "EBADF" << std::endl;
-        if (errno == EINTR)
-            std::cerr << "EINTR" << std::endl;
-        if (errno == EIO)
-            std::cerr << "EIO" << std::endl;
-        std::cerr << "errno: " << errno << std::endl;
-    }
-    std::cerr << "errno: " << errno << std::endl;
-    // proc->close();
+    } catch(std::exception& e) {}
     proc->terminate();
 
     delete proc;

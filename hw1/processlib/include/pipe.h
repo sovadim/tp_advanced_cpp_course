@@ -29,6 +29,8 @@ class Pipe {
     void close_read();
     void close_write();
 
+    bool is_closed() const;
+
  private:
     int fd_[2];
 };

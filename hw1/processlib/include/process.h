@@ -34,16 +34,13 @@ class Process : IWritable, IReadable {
     void close();
 
     /* Child process termination */
-    void terminate();
+    void terminate() noexcept;
 
  private:
     Pipe pipe_parent;
     Pipe pipe_child;
 
     pid_t pid;
-
-    // TODO: remove
-    bool is_readable;
 };
 
 }  // namespace process
