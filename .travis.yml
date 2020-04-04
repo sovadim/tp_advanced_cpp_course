@@ -5,12 +5,12 @@ sudo: required
 language: cpp
 compiler: g++
 
-install:
-    - sudo apt-get update -y
-    - sudo apt-get install -y python-pip
-    - python -m pip install cpplint
-    - sudo apt-get install -y cppcheck
-
-script:
-    - ./ci/hw1/linters.sh
-    - ./ci/hw1/build.sh
+jobs:
+    include:
+        -stage: linters
+        script:
+            - ./ci/install/linters.sh
+            - ./ci/hw1/linters.sh
+        -stage: build
+        script:
+            - ./ci/hw1/build.sh
