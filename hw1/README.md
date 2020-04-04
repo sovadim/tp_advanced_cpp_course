@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sovadim/tp_advanced_cpp_course.svg?branch=hw1)](https://travis-ci.org/sovadim/tp_advanced_cpp_course)
+
 # Homework 1
 
 ## Task
