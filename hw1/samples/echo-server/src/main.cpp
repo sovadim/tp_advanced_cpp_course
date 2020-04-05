@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
     std::unique_ptr<process::Process> process;
 
     try {
-        process = std::make_unique<process::Process>("/bin/cat");// = new process::Process("/bin/cat");
+        process = std::make_unique<process::Process>("/bin/cat");
     } catch (const std::exception& e) {
         std::cerr << "Error in process initialisation" << std::endl;
         std::cerr << e.what() << std::endl;

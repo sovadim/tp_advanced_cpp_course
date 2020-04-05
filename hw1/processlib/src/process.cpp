@@ -26,12 +26,10 @@ Process::Process(const std::string& executable) {
             pipe_parent.dup_read_fd(fileno(stdin));
             pipe_child.dup_write_fd(fileno(stdout));
         } catch(const std::exception& e) {
-            throw std::runtime_error("Pipe failed");
             exit(EXIT_FAILURE);
         }
 
         if (-1 == execl(executable.c_str(), executable.c_str(), NULL)) {
-            throw std::runtime_error("Child process not started");
             exit(EXIT_FAILURE);
         }
     }
