@@ -2,20 +2,11 @@
 #define PROCESS_H
 
 #include <string>
-#include <exception>
 #include "ireadable.h"
 #include "iwritable.h"
 #include "pipe.h"
 
 namespace process {
-
-class Process_exception : public std::exception {
-    virtual const char *what() const noexcept;
-};
-
-class Proc_io_exception : public std::exception {
-    virtual const char *what() const noexcept;
-};
 
 class Process : IWritable, IReadable {
  public:
@@ -23,9 +14,9 @@ class Process : IWritable, IReadable {
     explicit Process(const std::string &executable);
     ~Process() noexcept;
 
-    size_t write(const void *data, size_t len);
+    size_t write(const void *data, size_t len) override;
     void writeExact(const void *data, size_t len);
-    size_t read(void *data, size_t len);
+    size_t read(void *data, size_t len) override;
     void readExact(void *data, size_t len);
 
     bool isReadable() const;

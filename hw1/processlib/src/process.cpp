@@ -4,26 +4,18 @@
 #include <sys/wait.h>
 #include <string>
 #include <iostream>
+#include <stdexcept>
 #include "process.h"
 #include "pipe.h"
 
 namespace process {
-
-const char* Process_exception::what() const noexcept {
-    return "Process failed";
-}
-
-const char* Proc_io_exception::what() const noexcept {
-    return "Read/Write error";
-}
 
 Process::Process(const std::string& executable) {
     pid = fork();
 
     if (-1 == pid) {
         terminate();
-        std::cerr << "Bad pid number" << std::endl;
-        throw Process_exception();
+        throw std::runtime_error("Bad pid number");
     }
 
     if (0 == pid) {
@@ -31,32 +23,26 @@ Process::Process(const std::string& executable) {
         try {
             pipe_parent.close_write();
             pipe_child.close_read();
-
             pipe_parent.dup_read_fd(fileno(stdin));
             pipe_child.dup_write_fd(fileno(stdout));
         } catch(const std::exception& e) {
-            std::cerr << "Child process failed:\n" << e.what() << std::endl;
+            throw std::runtime_error("Pipe failed");
             exit(EXIT_FAILURE);
         }
 
         if (-1 == execl(executable.c_str(), executable.c_str(), NULL)) {
-            std::cerr << "Child process failed" << std::endl;
+            throw std::runtime_error("Child process not started");
             exit(EXIT_FAILURE);
         }
     }
 }
 
 Process::~Process() noexcept {
-    try {
-        close();
-        terminate();
-    } catch(const std::exception& e) {
-        std::cerr << e.what() << std::endl;
-    }
+    try { close(), terminate(); } catch(const std::exception& e) {}
 }
 
 size_t Process::write(const void* data, size_t len) {
-    return pipe_parent.write((char*)data, len);
+    return pipe_parent.write(data, len);
 }
 
 void Process::writeExact(const void* data, size_t len) {

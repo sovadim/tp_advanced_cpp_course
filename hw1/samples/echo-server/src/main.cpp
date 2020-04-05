@@ -1,18 +1,19 @@
 #include <iostream>
 #include <string>
 #include <exception>
+#include <memory>
 #include "process.h"
 #include "pipe.h"
 
 int main(int argc, char** argv) {
-    process::Process *proc;
+    std::unique_ptr<process::Process> process;
 
     try {
-        proc = new process::Process("/bin/cat");
+        process = std::make_unique<process::Process>("/bin/cat");// = new process::Process("/bin/cat");
     } catch (const std::exception& e) {
         std::cerr << "Error in process initialisation" << std::endl;
         std::cerr << e.what() << std::endl;
-        proc->terminate();
+        process->terminate();
         return 1;
     }
 
@@ -27,22 +28,22 @@ int main(int argc, char** argv) {
             std::cout << "----------------" << std::endl;
             std::cout << "=== write / read ===" << std::endl;
 
-            bytes = proc->write(buffer.c_str(), buffer.size());
+            bytes = process->write(buffer.c_str(), buffer.size());
             std::cout << "sent:" << std::endl;
             std::cout << "- data: " << buffer << std::endl;
             std::cout << "- bytes: " << bytes << std::endl;
 
-            bytes = proc->read(&void_buffer[0], buffer.size());
+            bytes = process->read((void *)void_buffer.data(), buffer.size());
             std::cout << "received:" << std::endl;
             std::cout << "- data: " << void_buffer << std::endl;
             std::cout << "- bytes: " << bytes << std::endl;
 
             std::cout << "\n=== writeExact / readExact ===" << std::endl;
 
-            proc->writeExact(buffer.c_str(), buffer.size());
+            process->writeExact(buffer.c_str(), buffer.size());
             std::cout << "sent:" << buffer << std::endl;
 
-            proc->readExact(&void_buffer[0], buffer.size());
+            process->readExact(&void_buffer[0], buffer.size());
             std::cout << "received:" << void_buffer << std::endl;
 
             std::cout << "----------------" << std::endl;
@@ -52,11 +53,5 @@ int main(int argc, char** argv) {
     }
 
     std::cerr << "Eof received, stop" << std::endl;
-
-    try { proc->close(); } catch(std::exception& e) {}
-    proc->terminate();
-
-    delete proc;
-
     return 0;
 }
