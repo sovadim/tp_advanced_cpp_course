@@ -5,7 +5,7 @@
 namespace process {
 
 Pipe::Pipe() {
-    if (-1 == ::pipe(fd_)) {
+    if (::pipe(fd_) == -1) {
         fd_[0] = -1, fd_[1] = -1;
         throw std::runtime_error("Pipe failed");
     }
@@ -28,14 +28,14 @@ size_t Pipe::write(const void* data, size_t len) const {
 }
 
 void Pipe::dup_read_fd(int newfd) {
-    if (-1 == ::dup2(fd_[0], newfd)) {
+    if (::dup2(fd_[0], newfd) == -1) {
         fd_[0] = -1;
         throw std::runtime_error("Pipe failed - dup error");
     }
 }
 
 void Pipe::dup_write_fd(int newfd) {
-    if (-1 == ::dup2(fd_[1], newfd)) {
+    if (::dup2(fd_[1], newfd) == -1) {
         fd_[1] = -1;
         throw std::runtime_error("Pipe failed - dup error");
     }
@@ -47,7 +47,7 @@ void Pipe::close() {
 
 void Pipe::close_read() {
     if (fd_[0] != -1) {
-        if (-1 == ::close(fd_[0])) {
+        if (::close(fd_[0]) == -1) {
             fd_[0] = -1;
             throw std::runtime_error("Pipe failed - read fd not closed");
         }
@@ -56,7 +56,7 @@ void Pipe::close_read() {
 
 void Pipe::close_write() {
     if (fd_[1] != -1) {
-        if (-1 == ::close(fd_[1])) {
+        if (::close(fd_[1]) == -1) {
             fd_[1] = -1;
             throw std::runtime_error("Pipe failed - write fd not closed");
         }

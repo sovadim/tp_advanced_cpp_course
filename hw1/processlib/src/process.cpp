@@ -13,12 +13,12 @@ namespace process {
 Process::Process(const std::string& executable) {
     pid = fork();
 
-    if (-1 == pid) {
+    if (pid == -1) {
         terminate();
         throw std::runtime_error("Bad pid number");
     }
 
-    if (0 == pid) {
+    if (pid == 0) {
         /* Child process */
         try {
             pipe_parent.close_write();
