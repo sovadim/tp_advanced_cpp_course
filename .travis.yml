@@ -11,10 +11,10 @@ stages:
 
 jobs:
     include:
-        -stage: linters
+        stage: linters
         script:
             - ./ci/install/linters.sh
             - ./ci/hw1/linters.sh
-        -stage: build
+        stage: build
         script:
             - ./ci/hw1/build.sh
