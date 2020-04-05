@@ -5,6 +5,10 @@ sudo: required
 language: cpp
 compiler: g++
 
+stages:
+    - linters
+    - build
+
 jobs:
     include:
         -stage: linters
