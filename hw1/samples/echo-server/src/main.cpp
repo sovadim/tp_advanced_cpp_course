@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
             std::cout << "- data: " << buffer << std::endl;
             std::cout << "- bytes: " << bytes << std::endl;
 
-            bytes = process->read((void *)void_buffer.data(), buffer.size());
+            bytes = process->read(const_cast<char*>(void_buffer.data()), buffer.size());
             std::cout << "received:" << std::endl;
             std::cout << "- data: " << void_buffer << std::endl;
             std::cout << "- bytes: " << bytes << std::endl;
@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
             process->writeExact(buffer.c_str(), buffer.size());
             std::cout << "sent:" << buffer << std::endl;
 
-            process->readExact(&void_buffer[0], buffer.size());
+            process->readExact(const_cast<char*>(void_buffer.data()), buffer.size());
             std::cout << "received:" << void_buffer << std::endl;
 
             std::cout << "----------------" << std::endl;
