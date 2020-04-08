@@ -37,5 +37,5 @@ To build library and samples you can run script used in ci
 
 ```bash
 $ cd ..
-$ ./../ci/hw2/build.sh
+$ ./ci/hw2/build.sh
 ```
