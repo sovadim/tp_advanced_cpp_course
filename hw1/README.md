@@ -72,5 +72,5 @@ $ make
 To build library and samples you can run script used in ci
 ```bash
 $ cd ..
-$ ./../ci/hw1/build.sh
+$ ./ci/hw1/build.sh
 ```
