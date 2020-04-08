@@ -1,0 +1,19 @@
+os: linux
+dist: bionic
+
+language: cpp
+compiler: g++
+
+stages:
+    - linters
+    - build
+
+jobs:
+    include:
+        stage: linters
+        script:
+            - ./ci/install/linters.sh
+            - ./ci/hw1/linters.sh
+        stage: build
+        script:
+            - ./ci/hw1/build.sh
