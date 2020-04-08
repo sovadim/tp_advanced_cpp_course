@@ -12,3 +12,30 @@
 ![Class diagram](./images/pic1.png)
 
 ![Class diagram 2](./images/pic2.png)
+
+## Implementation progress
+
+- [ ] Logger
+- [ ] BaseLogger
+- [ ] FileLogger
+- [ ] StdoutLogger
+- [ ] StderrLogger
+
+## How to build
+
+Build log library
+
+```bash
+$ cd loglib
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+```
+
+To build library and samples you can run script used in ci
+
+```bash
+$ cd ..
+$ ./../ci/hw2/build.sh
+```
