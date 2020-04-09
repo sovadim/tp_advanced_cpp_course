@@ -13,7 +13,9 @@ jobs:
         stage: linters
         script:
             - ./ci/install/linters.sh
+            - ./ci/hw2/linters.sh
             - ./ci/hw1/linters.sh
         stage: build
         script:
+            - ./ci/hw2/build.sh
             - ./ci/hw1/build.sh
