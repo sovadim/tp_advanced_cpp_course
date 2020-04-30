@@ -1,6 +1,7 @@
 #include "stdoutlogger.h"
 
-namespace log
-{
-    
+namespace log {
+
+
+
 }  // namespace log

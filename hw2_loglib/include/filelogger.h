@@ -3,8 +3,7 @@
 
 #include "baselogger.h"
 
-namespace log
-{
+namespace log {
 
 class FileLogger : BaseLogger {
 

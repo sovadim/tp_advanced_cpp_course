@@ -3,8 +3,7 @@
 
 #include <iostream>
 
-namespace log
-{
+namespace log {
     
 class BaseLogger {
  public:
