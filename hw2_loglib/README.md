@@ -26,7 +26,6 @@
 Build log library
 
 ```bash
-$ cd loglib
 $ mkdir build
 $ cd build
 $ cmake ..

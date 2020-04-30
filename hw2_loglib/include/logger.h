@@ -1,6 +1,8 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
+#include <baselogger.h>
+
 namespace log {
 
 class Logger {
@@ -10,9 +12,9 @@ class Logger {
         return instance;
     }
 
-    /* BaseLogger */ void get_global_logger();
+    BaseLogger get_global_logger();
 
-    void set_global_logger(/* BaseLogger logger*/);
+    void set_global_logger(BaseLogger logger);
 
  private:
     Logger() {};

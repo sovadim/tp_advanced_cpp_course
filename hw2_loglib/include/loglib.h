@@ -2,6 +2,8 @@
 #define LOGLIB_H
 
 #include <string>
+#include <iostream> // TODO: remove
+#include <logger.h>
 
 namespace log {
 
@@ -17,20 +19,28 @@ inline void create_stderr_logger() {
     // TODO
 }
 
-inline void debug(std::string& msg) {
+// TODO: template to take all elementary types
+inline void debug(std::string const& msg) {
     // TODO
+    std::cout << msg << std::endl;
 }
 
-inline void info(std::string& msg) {
+// TODO: template to take all elementary types
+inline void info(std::string const& msg) {
     // TODO
+    std::cout << msg << std::endl;
 }
 
-inline void warning(std::string& msg) {
+// TODO: template to take all elementary types
+inline void warning(std::string const& msg) {
     // TODO
+    std::cout << msg << std::endl;
 }
 
-inline void error(std::string& msg) {
+// TODO: template to take all elementary types
+inline void error(std::string const& msg) {
     // TODO
+    std::cout << msg << std::endl;
 }
 
 }  // namespace log
