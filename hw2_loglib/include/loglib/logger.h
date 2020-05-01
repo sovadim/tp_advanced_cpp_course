@@ -12,12 +12,16 @@ class Logger {
     Logger& operator=(Logger &&) = delete;
     Logger& operator=(Logger const&) = delete;
 
-    static Logger& get_instance();
+    static Logger& get_instance() {
+        static Logger instance;
+        return instance;
+    }
+    
     BaseLogger get_global_logger() const;
     void set_global_logger(BaseLogger const& logger);
 
  private:
-    Logger() = default;
+    Logger();
     BaseLogger global_logger_;
 };
 

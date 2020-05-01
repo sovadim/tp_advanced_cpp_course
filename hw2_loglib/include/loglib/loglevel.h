@@ -5,10 +5,10 @@ namespace log {
 
 // TODO: redo to enum class
 enum Level {
-   DEBUG,
-   INFO,
-   WARNING,
-   ERROR
+    DEBUG,
+    INFO,
+    WARNING,
+    ERROR
 };
 
 }  // namespace log

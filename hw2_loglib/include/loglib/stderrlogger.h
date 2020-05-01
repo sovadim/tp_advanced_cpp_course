@@ -7,7 +7,7 @@ namespace log {
 
 class StderrLogger : BaseLogger {
  public:
-    StderrLogger(Level level);
+    StderrLogger();
     void log(std::string msg, Level level) override;
 };
     

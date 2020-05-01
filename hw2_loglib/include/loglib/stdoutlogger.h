@@ -5,9 +5,9 @@
 
 namespace log {
 
-class StdoutLogger : BaseLogger {
+class StdoutLogger : private BaseLogger {
  public:
-    StdoutLogger(Level level);
+    StdoutLogger();
     void log(std::string msg, Level level) override;
 };
 

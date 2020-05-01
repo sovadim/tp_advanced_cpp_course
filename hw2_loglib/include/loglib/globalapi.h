@@ -3,8 +3,8 @@
 
 #include <string>
 #include <iostream> // TODO: remove
-#include "loglib/logger.h"
-#include "loglib/filelogger.h"
+#include "logger.h"
+#include "filelogger.h"
 
 namespace log {
 

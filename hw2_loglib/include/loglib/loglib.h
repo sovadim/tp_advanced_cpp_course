@@ -1,6 +1,6 @@
 #ifndef LOGLIB_H
 #define LOGLIB_H
 
-#include "loglib/globalapi.h"
+#include "globalapi.h"
 
 #endif  // LOGLIB_H

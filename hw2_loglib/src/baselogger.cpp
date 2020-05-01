@@ -1,6 +1,5 @@
-#include "loglib/baselogger.h"
-
 #include <iostream> // TODO: remove
+#include "baselogger.h"
 
 namespace log {
 

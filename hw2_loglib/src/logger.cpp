@@ -1,11 +1,6 @@
-#include "loglib/logger.h"
+#include "logger.h"
 
 namespace log {
-
-Logger& Logger::get_instance() {
-    static Logger instance;
-    return instance;
-}
 
 BaseLogger Logger::get_global_logger() const {
     return global_logger_;
@@ -14,6 +9,5 @@ BaseLogger Logger::get_global_logger() const {
 void Logger::set_global_logger(BaseLogger const& logger) {
     global_logger_ = logger;
 }
-
 
 }  // namespace log
