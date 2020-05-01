@@ -2,34 +2,29 @@
 #define BASELOGGER_H
 
 #include <iostream>
+#include "loglib/loglevel.h"
 
 namespace log {
 
-// TODO: redo to enum class
-enum Level {
-   DEBUG,
-   INFO,
-   WARNING,
-   ERROR
-};
-
 class BaseLogger {
  public:
-    virtual ~BaseLogger();
+    BaseLogger() = delete;
+    BaseLogger(Level const& level);
+    virtual ~BaseLogger() noexcept;
 
-    void debug(std::string& msg);
-    void info(std::string& msg);
-    void warn(std::string& msg);
-    void error(std::string& msg);
+    virtual void debug(std::string const& msg) const final;
+    virtual void info(std::string const& msg) const final;
+    virtual void warn(std::string const& msg) const final;
+    virtual void error(std::string const& msg) const final;
 
-    void set_level(Level level);
-    Level level();
+    virtual void set_level(Level const& level) noexcept final;
+    virtual Level level() const noexcept final;
 
     void flush();
 
  private:
     Level level_;
-    void log(std::string msg, Level level);
+    virtual void log(std::string msg, Level level);
 };
 
 }  // namespace log

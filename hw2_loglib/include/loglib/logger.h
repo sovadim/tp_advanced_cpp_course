@@ -7,19 +7,18 @@ namespace log {
 
 class Logger {
  public:
-    static Logger& get_instance() {
-        static Logger instance;
-        return instance;
-    }
+    Logger(Logger const&) = delete;
+    Logger(Logger &&) = delete;
+    Logger& operator=(Logger &&) = delete;
+    Logger& operator=(Logger const&) = delete;
 
-    BaseLogger get_global_logger();
-
-    void set_global_logger(BaseLogger logger);
+    static Logger& get_instance();
+    BaseLogger get_global_logger() const;
+    void set_global_logger(BaseLogger const& logger);
 
  private:
-    Logger() {};
-    Logger(Logger const&);
-    Logger& operator=(Logger const&);
+    Logger() = default;
+    BaseLogger global_logger_;
 };
 
 }  // namespace log

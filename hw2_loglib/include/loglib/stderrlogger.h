@@ -6,7 +6,9 @@
 namespace log {
 
 class StderrLogger : BaseLogger {
-
+ public:
+    StderrLogger(Level level);
+    void log(std::string msg, Level level) override;
 };
     
 }  // namespace log

@@ -1,4 +1,4 @@
-#include <loglib/loglib.h>
+#include "loglib/loglib.h"
 
 int main() {
 
@@ -8,6 +8,7 @@ int main() {
     // --log-to-file <path>
 
     // tmp
+    log::create_file_logger("filename", log::Level::DEBUG);
     log::create_stdout_logger();
 
     log::debug("debug");
