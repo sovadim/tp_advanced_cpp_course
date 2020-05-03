@@ -2,48 +2,46 @@
 #define GLOBALAPI_H
 
 #include <string>
-#include <iostream> // TODO: remove
-#include "logger.h"
-#include "filelogger.h"
+#include <memory>
+#include "loglib/logger.h"
+#include "loglib/baselogger.h"
+#include "loglib/stdoutlogger.h"
+#include "loglib/stderrlogger.h"
+#include "loglib/filelogger.h"
 
 namespace log {
 
 inline void create_file_logger(std::string const& filename,
-                               Level const& level) {
+                               Level level) {
     FileLogger logger(filename, level);
-    // Logger::get_instance().set_global_logger(logger);
+    Logger::get_instance().set_global_logger(
+        std::unique_ptr<BaseLogger>(new FileLogger(filename, level)));
 }
 
-inline void create_stdout_logger() {
-    // TODO
+inline void create_stdout_logger(Level const& level) {
+    Logger::get_instance().set_global_logger(
+        std::unique_ptr<BaseLogger>(new StdoutLogger(level)));
 }
 
-inline void create_stderr_logger() {
-    // TODO
+inline void create_stderr_logger(Level level) {
+    Logger::get_instance().set_global_logger(
+        std::unique_ptr<BaseLogger>(new StderrLogger(level)));
 }
 
-// TODO: template to take all elementary types
 inline void debug(std::string const& msg) {
-    // TODO
-    std::cout << msg << std::endl;
+    Logger::get_instance().get_global_logger()->debug(msg);
 }
 
-// TODO: template to take all elementary types
 inline void info(std::string const& msg) {
-    // TODO
-    std::cout << msg << std::endl;
+    Logger::get_instance().get_global_logger()->info(msg);
 }
 
-// TODO: template to take all elementary types
 inline void warning(std::string const& msg) {
-    // TODO
-    std::cout << msg << std::endl;
+    Logger::get_instance().get_global_logger()->warn(msg);
 }
 
-// TODO: template to take all elementary types
 inline void error(std::string const& msg) {
-    // TODO
-    std::cout << msg << std::endl;
+    Logger::get_instance().get_global_logger()->error(msg);
 }
 
 }  // namespace log

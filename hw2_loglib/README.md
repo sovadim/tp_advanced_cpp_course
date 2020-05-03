@@ -20,6 +20,7 @@
 - [ ] FileLogger
 - [ ] StdoutLogger
 - [ ] StderrLogger
+- [ ] Exceptions
 
 ## How to build
 

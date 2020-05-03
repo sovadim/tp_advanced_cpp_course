@@ -8,8 +8,10 @@ int main() {
     // --log-to-file <path>
 
     // tmp
-    log::create_file_logger("filename", log::Level::DEBUG);
-    log::create_stdout_logger();
+    log::create_stdout_logger(log::DEBUG);
+
+    // log::create_file_logger("filename", log::Level::DEBUG);
+    // log::create_stdout_logger();
 
     log::debug("debug");
     log::info("info");

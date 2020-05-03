@@ -2,14 +2,14 @@
 #define FILELOGGER_H
 
 #include <fstream>
-#include "baselogger.h"
+#include "loglib/baselogger.h"
 
 namespace log {
 
-class FileLogger : BaseLogger {
+class FileLogger : public BaseLogger {
  public:
-    FileLogger(std::string filename, Level level);
-    void log(std::string msg, Level level) override;
+    FileLogger(std::string filename, Level const& level);
+    void log(std::string const& msg, Level const& level) override;
 
  private:
     std::ofstream ofstream;

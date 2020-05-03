@@ -1,14 +1,14 @@
 #ifndef STDERRLOGGER_H
 #define STDERRLOGGER_H
 
-#include "baselogger.h"
+#include "loglib/baselogger.h"
 
 namespace log {
 
-class StderrLogger : BaseLogger {
+class StderrLogger : public BaseLogger {
  public:
-    StderrLogger();
-    void log(std::string msg, Level level) override;
+    using BaseLogger::BaseLogger;
+    void log(std::string const& msg, Level const& level) override;
 };
     
 }  // namespace log

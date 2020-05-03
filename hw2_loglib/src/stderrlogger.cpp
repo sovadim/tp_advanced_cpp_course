@@ -1,9 +1,9 @@
 #include <iostream>
-#include "stderrlogger.h"
+#include "loglib/stderrlogger.h"
 
 namespace log {
 
-void StderrLogger::log(std::string msg, Level level) {
+void StderrLogger::log(std::string const& msg, Level const& level) {
     if (level >= level_) std::cerr << msg << std::endl;
 }
 

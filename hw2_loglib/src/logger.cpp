@@ -1,13 +1,13 @@
-#include "logger.h"
+#include "loglib/logger.h"
 
 namespace log {
 
-BaseLogger Logger::get_global_logger() const {
+std::shared_ptr<BaseLogger> Logger::get_global_logger() const {
     return global_logger_;
 }
 
-void Logger::set_global_logger(BaseLogger const& logger) {
-    global_logger_ = logger;
+void Logger::set_global_logger(std::unique_ptr<BaseLogger> logger) {
+    global_logger_ = std::move(logger);
 }
 
 }  // namespace log

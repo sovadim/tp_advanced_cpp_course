@@ -1,7 +1,8 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include <baselogger.h>
+#include <memory>
+#include "loglib/baselogger.h"
 
 namespace log {
 
@@ -17,12 +18,12 @@ class Logger {
         return instance;
     }
     
-    BaseLogger get_global_logger() const;
-    void set_global_logger(BaseLogger const& logger);
+    std::shared_ptr<BaseLogger> get_global_logger() const;
+    void set_global_logger(std::unique_ptr<BaseLogger> logger);
 
  private:
-    Logger();
-    BaseLogger global_logger_;
+    Logger() {};
+    std::shared_ptr<BaseLogger> global_logger_;
 };
 
 }  // namespace log
