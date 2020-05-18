@@ -1,11 +1,16 @@
+#include <unistd.h>
+#include <iostream>
 #include "loglib/loglib.h"
 
-int main() {
+int main(int argc, char* argv[]) {
+
 
     // TODO: getopt
     // --verbose - all logs
     // --quiet
     // --log-to-file <path>
+    // --stderr
+    // --help
 
     // tmp
     log::create_stdout_logger(log::DEBUG);

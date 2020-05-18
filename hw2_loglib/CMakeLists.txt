@@ -1,9 +1,3 @@
-cmake_minimum_required(VERSION 3.5)
-
-add_compile_options(-O3)
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_COMPILER g++)
-
 project(log)
 
 set(SOURCES
@@ -20,3 +14,7 @@ target_include_directories(${PROJECT_NAME}
     PUBLIC
         ${PROJECT_SOURCE_DIR}/include
 )
+
+add_subdirectory(samples)
+
+add_subdirectory(tests)
