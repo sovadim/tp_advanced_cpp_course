@@ -26,6 +26,7 @@ project(ADVANCEDCPP LANGUAGES CXX)
 include(cmake/ClangTidy.cmake)
 
 # == Targets ==
+add_subdirectory(entrance_task)
 add_subdirectory(hw1_processlib)
 add_subdirectory(hw2_loglib)
 

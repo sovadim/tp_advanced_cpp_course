@@ -1,28 +1,24 @@
-#ifndef SOLUTION_INCLUDE_STRINGBASE_H_
-#define SOLUTION_INCLUDE_STRINGBASE_H_
+#pragma once
 
 #include <stddef.h>
-#include <string>
-#include <iostream>
+#include <string_view>
 #include <vector>
 
 namespace sol {
 
 class StringBase {
- public:
+public:
     StringBase();
+    ~StringBase() noexcept;
 
-    void push(const std::string &str);
-    void insert(const std::string &str, unsigned ind);
-    void change(const std::string &str, unsigned ind);
-    void remove(unsigned ind);
+    void push(std::string_view str);
+    void insert(std::string_view str, size_t ind);
+    void change(std::string_view str, size_t ind);
+    void remove(size_t ind);
     const std::vector<std::string> &getData();
 
  private:
-    /* database */
-    std::vector<std::string> _data;
+    std::vector<std::string> _dbase;
 };
 
 }  // namespace sol
-
-#endif  // SOLUTION_INCLUDE_STRINGBASE_H_

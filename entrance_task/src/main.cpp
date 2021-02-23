@@ -1,37 +1,31 @@
 #include <iostream>
-#include <string>
 #include <sstream>
+#include <memory>
 #include "stringbase.h"
 #include "stringhelper.h"
 
-#define DELIMITER "\t"
-char *delimeter = "\t";
-
 using sol::StringBase;
 
-void print(char *str) {
-    std::cout << str << std::endl;
-}
-
 void printData(const StringBase &base) {
-    printStrings(base.getData(), delimeter);
+    printStrings(base.getData(), "\t");
 }
 
 int main() {
-    print("Enter the string:");
+    auto sbase = std::make_unique<StringBase>();
+
+    const std::string delimeter = "\t";
+    std::cout << "Enter the string:" << std::endl;
 
     std::string input;
-
     std::getline(std::cin, input);
 
-    StringBase sbase;
-    for (auto a : parseString(input, delimeter)) {
-        sbase.push(a);
+    
+    for (auto &a : parseString(input, delimeter)) {
+        sbase->push(a);
     }
 
-    /* Read user data till 'exit' command */
+    /* Read user data till the 'exit' command */
     while (true) {
-        print("Next command:");
         std::string command;
         std::cin >> command;
 
@@ -39,22 +33,22 @@ int main() {
             std::string str;
             std::cin >> str;
 
-            unsigned ind;
+            size_t ind;
             std::cin >> ind;
 
-            sbase.insert(str, ind);
+            sbase->insert(str, ind);
         } else if (command == "change") {
             std::string str;
             std::cin >> str;
 
-            unsigned ind;
+            size_t ind;
             std::cin >> ind;
 
-            sbase.change(str, ind);
+            sbase->change(str, ind);
         } else if (command == "remove") {
-            unsigned ind;
+            size_t ind;
             std::cin >> ind;
-            sbase.remove(ind);
+            sbase->remove(ind);
         } else {
             break;
         }

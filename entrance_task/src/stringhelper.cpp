@@ -1,10 +1,11 @@
+#include <iostream>
 #include "stringhelper.h"
 
-std::vector<std::string> parseString(const std::string &str,
-                                     const std::string &delimiter = " ") {
+std::vector<std::string> parseString(std::string_view str,
+                                     std::string_view delimiter = " ") {
     std::vector<std::string> vec;
 
-    unsigned position = 0;
+    size_t position = 0;
     std::string token;
     std::string s = str;
     while ((position = s.find(delimiter)) != std::string::npos) {
@@ -18,8 +19,9 @@ std::vector<std::string> parseString(const std::string &str,
 }
 
 const void printStrings(const std::vector<std::string> &strs,
-                        const std::string &delimeter = " ") {
-    for (const std::string a : strs)
+                        std::string_view delimeter = " ") {
+    for (auto &a : strs) {
         std::cout << a << delimeter;
+    }
     std::cout << std::endl;
 }
