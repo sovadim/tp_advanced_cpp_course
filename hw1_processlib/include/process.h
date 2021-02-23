@@ -1,7 +1,7 @@
-#ifndef PROCESS_H
-#define PROCESS_H
+#pragma once
 
 #include <string>
+#include <span>
 #include "ireadable.h"
 #include "iwritable.h"
 #include "pipe.h"
@@ -9,15 +9,13 @@
 namespace process {
 
 class Process : IWritable, IReadable {
- public:
-    /* Constructor invoke immediate start of process */
-    explicit Process(const std::string &executable);
+public:
+    /* Constructor invokes immediate start of process */
+    explicit Process(std::string_view executable);
     ~Process() noexcept;
 
-    size_t write(const void *data, size_t len) override;
-    void writeExact(const void *data, size_t len);
-    size_t read(void *data, size_t len) override;
-    void readExact(void *data, size_t len);
+    static void writeExact(const std::span<void> data) const;
+    static void readExact(std::span<void> data) const;
 
     bool isReadable() const;
     void closeStdin();
@@ -25,9 +23,9 @@ class Process : IWritable, IReadable {
     void close();
 
     /* Child process termination */
-    void terminate() noexcept;
+    void terminate() const noexcept;
 
- private:
+private:
     /* Copying of Process object is prohibited */
     Process(Process const & p);
     Process & operator=(Process const & p);
@@ -39,5 +37,3 @@ class Process : IWritable, IReadable {
 };
 
 }  // namespace process
-
-#endif  // PROCESS_H

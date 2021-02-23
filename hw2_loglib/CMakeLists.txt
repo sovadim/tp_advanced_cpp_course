@@ -1,4 +1,4 @@
-project(log)
+project(loglib)
 
 set(SOURCES
     src/logger.cpp

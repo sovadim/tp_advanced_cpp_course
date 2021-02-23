@@ -1,5 +1,5 @@
-#ifndef LOGLEVEL_H
-#define LOGLEVEL_H
+#ifndef LOGLIB_LOGLEVEL_H
+#define LOGLIB_LOGLEVEL_H
 
 namespace log {
 
@@ -13,4 +13,4 @@ enum Level {
 
 }  // namespace log
 
-#endif  // LOGLEVEL_H
+#endif  // LOGLIB_LOGLEVEL_H

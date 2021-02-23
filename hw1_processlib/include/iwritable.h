@@ -1,15 +1,13 @@
-#ifndef IWRITABLE_H
-#define IWRITABLE_H
+#pragma once
 
 #include <stddef.h>
+#include <span>
 
 namespace process {
 
 struct IWritable {
     virtual ~IWritable() noexcept {};
-    virtual size_t write(const void* data, size_t len) = 0;
+    virtual size_t write(const std::span<void> buffer) const = 0;
 };
 
 }  // namespace process
-
-#endif  // IWRITABLE_H

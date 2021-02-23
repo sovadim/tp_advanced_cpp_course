@@ -1,5 +1,5 @@
-#ifndef LOGGER_H
-#define LOGGER_H
+#ifndef LOGLIB_LOGGER_H
+#define LOGLIB_LOGGER_H
 
 #include <memory>
 #include "loglib/baselogger.h"
@@ -28,4 +28,4 @@ class Logger {
 
 }  // namespace log
 
-#endif  // LOGGER_H
+#endif  // LOGLIB_LOGGER_H

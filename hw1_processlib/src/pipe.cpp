@@ -12,18 +12,26 @@ Pipe::Pipe() {
 }
 
 Pipe::~Pipe() noexcept {
-    try {close();} catch(std::exception& e) {}
+    try {
+        close();
+    } catch(std::exception& e) {
+        // TODO: write error to stderr
+    }
 }
 
 size_t Pipe::read(char* data, size_t len) const {
     ssize_t bytes = ::read(fd_[0], data, len);
-    if (bytes < 0) throw std::runtime_error("Pipe failed - read error");
+    if (bytes < 0) {
+        throw std::runtime_error("Pipe failed - read error");
+    }
     return bytes;
 }
 
-size_t Pipe::write(const void* data, size_t len) const {
-    ssize_t bytes = ::write(fd_[1], data, len);
-    if (bytes < 0) throw std::runtime_error("Pipe failed - write error");
+size_t Pipe::write(const std::span<void> buffer) const {
+    ssize_t bytes = ::write(fd_[1], buffer, len);
+    if (bytes < 0) {
+        throw std::runtime_error("Pipe failed - write error");
+    }
     return bytes;
 }
 

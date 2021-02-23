@@ -4,7 +4,6 @@
 
 int main(int argc, char* argv[]) {
 
-
     // TODO: getopt
     // --verbose - all logs
     // --quiet

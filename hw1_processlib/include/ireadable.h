@@ -1,15 +1,13 @@
-#ifndef IREADABLE_H
-#define IREADABLE_H
+#pragma once
 
 #include <stddef.h>
+#include <span>
 
 namespace process {
 
 struct IReadable {
     virtual ~IReadable() noexcept {};
-    virtual size_t read(void* data, size_t len) = 0;
+    virtual size_t read(std::span<void> &buffer) const = 0;
 };
 
 }  // namespace process
-
-#endif  // IREADABLE_H

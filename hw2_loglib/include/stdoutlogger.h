@@ -1,5 +1,5 @@
-#ifndef STDOUTLOGGER_H
-#define STDOUTLOGGER_H
+#ifndef LOGLIB_STDOUTLOGGER_H
+#define LOGLIB_STDOUTLOGGER_H
 
 #include "loglib/baselogger.h"
 
@@ -8,9 +8,9 @@ namespace log {
 class StdoutLogger : public BaseLogger {
  public:
     using BaseLogger::BaseLogger;
-    void log(std::string const& msg, Level const& level) override;
+    void log(std::string_view msg, Level const& level) override;
 };
 
 }  // namespace log
 
-#endif  // STDOUTLOGGER_H
+#endif  // LOGLIB_STDOUTLOGGER_H

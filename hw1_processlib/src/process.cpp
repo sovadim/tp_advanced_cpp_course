@@ -36,27 +36,31 @@ Process::Process(const std::string& executable) {
 }
 
 Process::~Process() noexcept {
-    try { close(), terminate(); } catch(const std::exception& e) {}
+    try {
+        close(), terminate();
+    } catch(const std::exception& e) {}
 }
 
-size_t Process::write(const void* data, size_t len) {
+size_t Process::write(const std::span<void> buffer) const {
     return pipe_parent.write(data, len);
 }
 
-void Process::writeExact(const void* data, size_t len) {
-    ssize_t byte_couter = 0;
-    while (byte_couter != len)
+void Process::writeExact(const std::span<void> buffer) const {
+    size_t byte_couter = 0;
+    while (byte_couter != len) {
         byte_couter += write(((uint8_t*)data) + byte_couter, len - byte_couter);
+    }
 }
 
-size_t Process::read(void* data, size_t len) {
+size_t Process::read(std::span<void> &buffer) {
     return pipe_child.read((char*)data, len);
 }
 
-void Process::readExact(void* data, size_t len) {
+void Process::readExact(std::span<void> &buffer) {
     ssize_t byte_couter = 0;
-    while (byte_couter < len)
+    while (byte_couter < len) {
         byte_couter += read(((uint8_t*)data) + byte_couter, len - byte_couter);
+    }
 }
 
 bool Process::isReadable() const {
@@ -71,7 +75,7 @@ void Process::close() {
     pipe_child.close();
 }
 
-void Process::terminate() noexcept {
+void Process::terminate() const noexcept {
     ::kill(pid, SIGTERM);
     int status;
     ::waitpid(pid, &status, 0);
