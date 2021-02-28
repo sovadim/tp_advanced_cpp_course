@@ -1,14 +1,16 @@
 #include <iostream>
 #include "stringhelper.h"
 
-std::vector<std::string> parseString(std::string_view str,
-                                     std::string_view delimiter = " ") {
+namespace sbaselib {
+
+std::vector<std::string> parseString(std::string_view value,
+                                     std::string_view delimeter = " ") {
     std::vector<std::string> vec;
 
     size_t position = 0;
     std::string token;
-    std::string s = str;
-    while ((position = s.find(delimiter)) != std::string::npos) {
+    std::string s = value.data();
+    while ((position = s.find(delimeter)) != std::string::npos) {
         token = s.substr(0, position);
         vec.push_back(token);
         std::cout << token << std::endl;
@@ -18,10 +20,12 @@ std::vector<std::string> parseString(std::string_view str,
     return vec;
 }
 
-const void printStrings(const std::vector<std::string> &strs,
+void printStrings(const std::vector<std::string> &base,
                         std::string_view delimeter = " ") {
-    for (auto &a : strs) {
+    for (const auto &a : base) {
         std::cout << a << delimeter;
     }
     std::cout << std::endl;
 }
+
+}  // sbaselib

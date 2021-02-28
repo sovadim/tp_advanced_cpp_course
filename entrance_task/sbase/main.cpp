@@ -4,23 +4,21 @@
 #include "stringbase.h"
 #include "stringhelper.h"
 
-using sol::StringBase;
-
-void printData(const StringBase &base) {
-    printStrings(base.getData(), "\t");
+void printData(const sbaselib::StringBase *base) {
+    sbaselib::printStrings(base->getData(), "\t");
 }
 
 int main() {
-    auto sbase = std::make_unique<StringBase>();
+    auto sbase = std::make_unique<sbaselib::StringBase>();
 
-    const std::string delimeter = "\t";
+    std::string_view delimeter = "\t";
     std::cout << "Enter the string:" << std::endl;
 
     std::string input;
     std::getline(std::cin, input);
 
     
-    for (auto &a : parseString(input, delimeter)) {
+    for (auto &a : sbaselib::parseString(input, delimeter)) {
         sbase->push(a);
     }
 
@@ -52,7 +50,7 @@ int main() {
         } else {
             break;
         }
-        printData(sbase);
+        printData(sbase.get());
     }
 
     return 0;
