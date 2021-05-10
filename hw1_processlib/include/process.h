@@ -18,7 +18,7 @@ public:
     void readExact(std::span<std::byte> buffer) const;
 
     size_t write(const std::span<const std::byte> buffer) const override;
-    void writeExact(const std::span<const std::byte> buffer) const;
+    void writeExact(std::span<const std::byte> buffer) const;
 
     bool isReadable() const;
     void closeStdin();

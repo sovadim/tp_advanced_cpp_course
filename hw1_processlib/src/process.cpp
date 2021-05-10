@@ -46,10 +46,9 @@ size_t Process::write(const std::span<const std::byte> buffer) const {
     return m_pipeParent.write(buffer);
 }
 
-void Process::writeExact(const std::span<const std::byte> buffer) const {
-    size_t byte_couter = 0;
-    while (byte_couter != buffer.size()) {
-        byte_couter += write(buffer);
+void Process::writeExact(std::span<const std::byte> buffer) const {
+    while (!buffer.empty()) {
+        buffer = buffer.subspan(write(buffer));
     }
 }
 
@@ -58,10 +57,8 @@ size_t Process::read(const std::span<std::byte> buffer) const {
 }
 
 void Process::readExact(std::span<std::byte> buffer) const {
-    size_t byteCouter = 0;
-    while (byteCouter < buffer.size()) {
-        // shift of span on value of how much read
-        byteCouter += read(buffer);
+    while (!buffer.empty()) {
+        buffer = buffer.subspan(read(buffer));
     }
 }
 
