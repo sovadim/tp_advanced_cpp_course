@@ -5,8 +5,13 @@
 namespace process {
 
 Pipe::Pipe() {
-    if (::pipe(fd_) == -1) {
-        fd_[0] = -1, fd_[1] = -1;
+    // TODO: fix
+    int tmp[2];
+    tmp[0] = m_fd.first;
+    tmp[1] = m_fd.second;
+    if (::pipe(tmp) == -1) {
+        m_fd.first = -1;
+        m_fd.second = -1;
         throw std::runtime_error("Pipe failed");
     }
 }
@@ -14,65 +19,66 @@ Pipe::Pipe() {
 Pipe::~Pipe() noexcept {
     try {
         close();
-    } catch(std::exception& e) {
+    } catch(const std::exception& e) {
         // TODO: write error to stderr
     }
 }
 
-size_t Pipe::read(char* data, size_t len) const {
-    ssize_t bytes = ::read(fd_[0], data, len);
+size_t Pipe::read(std::span<std::byte> buffer) const {
+    ssize_t bytes = ::read(m_fd.first, buffer.data(), buffer.size());
     if (bytes < 0) {
         throw std::runtime_error("Pipe failed - read error");
     }
     return bytes;
 }
 
-size_t Pipe::write(const std::span<void> buffer) const {
-    ssize_t bytes = ::write(fd_[1], buffer, len);
+size_t Pipe::write(const std::span<const std::byte> buffer) const {
+    ssize_t bytes = ::write(m_fd.second, buffer.data(), buffer.size());
     if (bytes < 0) {
         throw std::runtime_error("Pipe failed - write error");
     }
     return bytes;
 }
 
-void Pipe::dup_read_fd(int newfd) {
-    if (::dup2(fd_[0], newfd) == -1) {
-        fd_[0] = -1;
+void Pipe::dupReadFd(int newfd) {
+    if (::dup2(m_fd.first, newfd) == -1) {
+        m_fd.first = -1;
         throw std::runtime_error("Pipe failed - dup error");
     }
 }
 
-void Pipe::dup_write_fd(int newfd) {
-    if (::dup2(fd_[1], newfd) == -1) {
-        fd_[1] = -1;
+void Pipe::dupWriteFd(int newfd) {
+    if (::dup2(m_fd.second, newfd) == -1) {
+        m_fd.second = -1;
         throw std::runtime_error("Pipe failed - dup error");
     }
 }
 
 void Pipe::close() {
-    close_read(), close_write();
+    closeRead();
+    closeWrite();
 }
 
-void Pipe::close_read() {
-    if (fd_[0] != -1) {
-        if (::close(fd_[0]) == -1) {
-            fd_[0] = -1;
+void Pipe::closeRead() {
+    if (m_fd.first != -1) {
+        if (::close(m_fd.first) == -1) {
+            m_fd.first = -1;
             throw std::runtime_error("Pipe failed - read fd not closed");
         }
     }
 }
 
-void Pipe::close_write() {
-    if (fd_[1] != -1) {
-        if (::close(fd_[1]) == -1) {
-            fd_[1] = -1;
+void Pipe::closeWrite() {
+    if (m_fd.second != -1) {
+        if (::close(m_fd.second) == -1) {
+            m_fd.second = -1;
             throw std::runtime_error("Pipe failed - write fd not closed");
         }
     }
 }
 
-bool Pipe::is_closed() const {
-    return (fd_[0] == -1 || fd_[1] == -1);
+bool Pipe::isClosed() const {
+    return (m_fd.first == -1 || m_fd.second == -1);
 }
 
 }  // namespace process

@@ -14,8 +14,11 @@ public:
     explicit Process(std::string_view executable);
     ~Process() noexcept;
 
-    static void writeExact(const std::span<void> data) const;
-    static void readExact(std::span<void> data) const;
+    size_t read(const std::span<std::byte> buffer) const override;
+    void readExact(std::span<std::byte> buffer) const;
+
+    size_t write(const std::span<const std::byte> buffer) const override;
+    void writeExact(const std::span<const std::byte> buffer) const;
 
     bool isReadable() const;
     void closeStdin();
@@ -26,14 +29,13 @@ public:
     void terminate() const noexcept;
 
 private:
-    /* Copying of Process object is prohibited */
     Process(Process const & p);
-    Process & operator=(Process const & p);
+    Process & operator=(Process const &p);
 
-    Pipe pipe_parent;
-    Pipe pipe_child;
+    Pipe m_pipeParent;
+    Pipe m_pipeChild;
 
-    pid_t pid;
+    pid_t m_pid;
 };
 
 }  // namespace process

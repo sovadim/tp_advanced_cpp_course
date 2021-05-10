@@ -25,8 +25,7 @@ Linux.
 #ifndef PROCESS_H
 #define PROCESS_H
 
-class Process
-{
+class Process {
 public:
     explicit Process(const std::string& path);
     ~Process();
@@ -56,21 +55,3 @@ public:
 - [x] bool isReadable() const;
 - [x] void closeStdin();
 - [x] void close();
-
-## How to build
-
-Build process library
-
-```bash
-$ cd processlib
-$ mkdir build
-$ cd build
-$ cmake ..
-$ make
-```
-
-To build library and samples you can run script used in ci
-```bash
-$ cd ..
-$ ./ci/hw1/build.sh
-```

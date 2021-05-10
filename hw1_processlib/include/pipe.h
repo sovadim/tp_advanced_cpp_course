@@ -10,18 +10,21 @@ public:
     Pipe();
     ~Pipe() noexcept;
 
-    void dup_read_fd(int newfd);
-    void dup_write_fd(int newfd);
+    void dupReadFd(int newFd);
+    void dupWriteFd(int newFd);
+
+    size_t read(const std::span<std::byte> buffer) const override;
+    size_t write(const std::span<const std::byte> buffer) const override;
 
     void close();
 
-    void close_read();
-    void close_write();
+    void closeRead();
+    void closeWrite();
 
-    bool is_closed() const;
+    bool isClosed() const;
 
 private:
-    int fd_[2];
+    std::pair<int, int> m_fd;
 };
 
 }  // namespace process

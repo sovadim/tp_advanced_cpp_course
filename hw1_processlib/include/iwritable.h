@@ -7,7 +7,7 @@ namespace process {
 
 struct IWritable {
     virtual ~IWritable() noexcept {};
-    virtual size_t write(const std::span<void> buffer) const = 0;
+    virtual size_t write(const std::span<const std::byte> buffer) const = 0;
 };
 
 }  // namespace process

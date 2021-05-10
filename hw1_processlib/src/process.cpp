@@ -2,83 +2,85 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <string_view>
 #include <string>
-#include <iostream>
 #include <stdexcept>
 #include "process.h"
 #include "pipe.h"
 
 namespace process {
 
-Process::Process(const std::string& executable) {
-    pid = fork();
+Process::Process(std::string_view executable) {
+    m_pid = fork();
 
-    if (pid == -1) {
+    if (m_pid == -1) {
         terminate();
         throw std::runtime_error("Bad pid number");
     }
 
-    if (pid == 0) {
+    if (m_pid == 0) {
         /* Child process */
         try {
-            pipe_parent.close_write();
-            pipe_child.close_read();
-            pipe_parent.dup_read_fd(fileno(stdin));
-            pipe_child.dup_write_fd(fileno(stdout));
+            m_pipeParent.closeWrite();
+            m_pipeChild.closeRead();
+            m_pipeParent.dupReadFd(fileno(stdin));
+            m_pipeChild.dupWriteFd(fileno(stdout));
         } catch(const std::exception& e) {
             exit(EXIT_FAILURE);
         }
 
-        if (-1 == execl(executable.c_str(), executable.c_str(), NULL)) {
-            exit(EXIT_FAILURE);
+        if (-1 == execl(executable.data(), executable.data(), NULL)) {
+            std::exit(EXIT_FAILURE);
         }
     }
 }
 
 Process::~Process() noexcept {
     try {
-        close(), terminate();
+        close();
+        terminate();
     } catch(const std::exception& e) {}
 }
 
-size_t Process::write(const std::span<void> buffer) const {
-    return pipe_parent.write(data, len);
+size_t Process::write(const std::span<const std::byte> buffer) const {
+    return m_pipeParent.write(buffer);
 }
 
-void Process::writeExact(const std::span<void> buffer) const {
+void Process::writeExact(const std::span<const std::byte> buffer) const {
     size_t byte_couter = 0;
-    while (byte_couter != len) {
-        byte_couter += write(((uint8_t*)data) + byte_couter, len - byte_couter);
+    while (byte_couter != buffer.size()) {
+        byte_couter += write(buffer);
     }
 }
 
-size_t Process::read(std::span<void> &buffer) {
-    return pipe_child.read((char*)data, len);
+size_t Process::read(const std::span<std::byte> buffer) const {
+    return m_pipeChild.read(buffer);
 }
 
-void Process::readExact(std::span<void> &buffer) {
-    ssize_t byte_couter = 0;
-    while (byte_couter < len) {
-        byte_couter += read(((uint8_t*)data) + byte_couter, len - byte_couter);
+void Process::readExact(std::span<std::byte> buffer) const {
+    size_t byteCouter = 0;
+    while (byteCouter < buffer.size()) {
+        // shift of span on value of how much read
+        byteCouter += read(buffer);
     }
 }
 
 bool Process::isReadable() const {
-    return !pipe_parent.is_closed() && !pipe_child.is_closed();
+    return !m_pipeParent.isClosed() && !m_pipeChild.isClosed();
 }
 
 void Process::closeStdin() {
-    pipe_child.close_read();
+    m_pipeChild.closeRead();
 }
 
 void Process::close() {
-    pipe_child.close();
+    m_pipeChild.close();
 }
 
 void Process::terminate() const noexcept {
-    ::kill(pid, SIGTERM);
+    ::kill(m_pid, SIGTERM);
     int status;
-    ::waitpid(pid, &status, 0);
+    ::waitpid(m_pid, &status, 0);
 }
 
 }  // namespace process
