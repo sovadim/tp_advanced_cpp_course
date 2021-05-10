@@ -1,5 +1,0 @@
-What to test:
-
-- lvalue / rvalue as argument
-- all three loggers
-- all log levels

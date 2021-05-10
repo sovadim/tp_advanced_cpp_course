@@ -5,7 +5,7 @@
 #include "process.h"
 #include "pipe.h"
 
-int main(int argc, char** argv) {
+int main() {
     std::unique_ptr<process::Process> process;
 
     try {
@@ -21,30 +21,31 @@ int main(int argc, char** argv) {
 
     try {
         while (std::getline(std::cin, buffer)) {
-            std::string void_buffer;
-            void_buffer.resize(buffer.size());
+            std::string voidBuffer;
+            voidBuffer.resize(buffer.size());
             size_t bytes;
 
             std::cout << "----------------" << std::endl;
             std::cout << "=== write / read ===" << std::endl;
 
-            bytes = process->write(buffer.c_str(), buffer.size());
-            std::cout << "sent:" << std::endl;
+            bytes = process->write({reinterpret_cast<const std::byte *>(buffer.c_str()), buffer.size()});
+
+            std::cout << "\nsent:" << std::endl;
             std::cout << "- data: " << buffer << std::endl;
             std::cout << "- bytes: " << bytes << std::endl;
 
-            bytes = process->read(const_cast<char*>(void_buffer.data()), buffer.size());
+            bytes = process->read({reinterpret_cast<std::byte *>(voidBuffer.data()), buffer.size()});
             std::cout << "received:" << std::endl;
-            std::cout << "- data: " << void_buffer << std::endl;
+            std::cout << "- data: " << voidBuffer << std::endl;
             std::cout << "- bytes: " << bytes << std::endl;
 
             std::cout << "\n=== writeExact / readExact ===" << std::endl;
 
-            process->writeExact(buffer.c_str(), buffer.size());
-            std::cout << "sent:" << buffer << std::endl;
+            process->writeExact({reinterpret_cast<const std::byte *>(buffer.c_str()), buffer.size()});
+            std::cout << "\nsent:" << buffer << std::endl;
 
-            process->readExact(const_cast<char*>(void_buffer.data()), buffer.size());
-            std::cout << "received:" << void_buffer << std::endl;
+            process->readExact({reinterpret_cast<std::byte *>(voidBuffer.data()), buffer.size()});
+            std::cout << "received:" << voidBuffer << std::endl;
 
             std::cout << "----------------" << std::endl;
         }

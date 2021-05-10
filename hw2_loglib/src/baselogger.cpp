@@ -6,19 +6,19 @@ BaseLogger::BaseLogger(Level const& level) : level_(level) {}
 
 BaseLogger::~BaseLogger() {}
 
-void BaseLogger::debug(std::string const& msg) {
+void BaseLogger::debug(std::string_view msg) {
     log(msg, log::DEBUG);
 }
 
-void BaseLogger::info(std::string const& msg) {
+void BaseLogger::info(std::string_view msg) {
     log(msg, log::INFO);
 }
 
-void BaseLogger::warn(std::string const& msg) {
+void BaseLogger::warn(std::string_view msg) {
     log(msg, log::WARNING);
 }
 
-void BaseLogger::error(std::string const& msg) {
+void BaseLogger::error(std::string_view msg) {
     log(msg, log::ERROR);
 }
 
