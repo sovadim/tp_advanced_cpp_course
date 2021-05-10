@@ -1,4 +1,4 @@
-project(dbase)
+project(sbase)
 
 set(SOURCES
     main.cpp
