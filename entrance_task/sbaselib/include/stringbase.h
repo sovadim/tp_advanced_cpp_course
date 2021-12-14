@@ -1,15 +1,17 @@
 #pragma once
 
 #include <stddef.h>
-#include <string_view>
 #include <string>
+#include <string_view>
 #include <vector>
 
-namespace sbaselib {
+namespace sbaselib
+{
 
 using BaseT = std::vector<std::string>;
 
-class StringBase {
+class StringBase
+{
 public:
     StringBase() = default;
     ~StringBase() noexcept = default;
@@ -21,8 +23,8 @@ public:
 
     const BaseT &getData() const noexcept;
 
- private:
+private:
     BaseT dbase_;
 };
 
-}  // namespace sbaselib
+} // namespace sbaselib

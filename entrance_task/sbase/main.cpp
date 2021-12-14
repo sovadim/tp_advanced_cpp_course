@@ -1,14 +1,16 @@
-#include <iostream>
-#include <sstream>
-#include <memory>
 #include "stringbase.h"
 #include "stringhelper.h"
+#include <iostream>
+#include <memory>
+#include <sstream>
 
-void printData(const sbaselib::StringBase *base) {
+void printData(const sbaselib::StringBase *base)
+{
     sbaselib::printStrings(base->getData(), "\t");
 }
 
-int main() {
+int main()
+{
     auto sbase = std::make_unique<sbaselib::StringBase>();
 
     std::string_view delimeter = "\t";
@@ -17,17 +19,19 @@ int main() {
     std::string input;
     std::getline(std::cin, input);
 
-    
-    for (auto &a : sbaselib::parseString(input, delimeter)) {
+    for (auto &a : sbaselib::parseString(input, delimeter))
+    {
         sbase->push(a);
     }
 
     /* Read user data till the 'exit' command */
-    while (true) {
+    while (true)
+    {
         std::string command;
         std::cin >> command;
 
-        if (command == "insert") {
+        if (command == "insert")
+        {
             std::string str;
             std::cin >> str;
 
@@ -35,7 +39,9 @@ int main() {
             std::cin >> ind;
 
             sbase->insert(str, ind);
-        } else if (command == "change") {
+        }
+        else if (command == "change")
+        {
             std::string str;
             std::cin >> str;
 
@@ -43,11 +49,15 @@ int main() {
             std::cin >> ind;
 
             sbase->change(str, ind);
-        } else if (command == "remove") {
+        }
+        else if (command == "remove")
+        {
             size_t ind;
             std::cin >> ind;
             sbase->remove(ind);
-        } else {
+        }
+        else
+        {
             break;
         }
         printData(sbase.get());
