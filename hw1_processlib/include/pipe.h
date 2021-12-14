@@ -3,9 +3,11 @@
 #include "ireadable.h"
 #include "iwritable.h"
 
-namespace process {
+namespace process
+{
 
-class Pipe : IWritable, IReadable {
+class Pipe : IWritable, IReadable
+{
 public:
     Pipe();
     ~Pipe() noexcept;
@@ -27,4 +29,4 @@ private:
     std::pair<int, int> m_fd;
 };
 
-}  // namespace process
+} // namespace process

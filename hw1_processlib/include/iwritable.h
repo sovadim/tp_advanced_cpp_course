@@ -1,13 +1,15 @@
 #pragma once
 
-#include <stddef.h>
 #include <span>
+#include <stddef.h>
 
-namespace process {
+namespace process
+{
 
-struct IWritable {
+struct IWritable
+{
     virtual ~IWritable() noexcept {};
     virtual size_t write(const std::span<const std::byte> buffer) const = 0;
 };
 
-}  // namespace process
+} // namespace process

@@ -1,14 +1,16 @@
 #pragma once
 
-#include <string>
-#include <span>
 #include "ireadable.h"
 #include "iwritable.h"
 #include "pipe.h"
+#include <span>
+#include <string>
 
-namespace process {
+namespace process
+{
 
-class Process : IWritable, IReadable {
+class Process : IWritable, IReadable
+{
 public:
     /* Constructor invokes immediate start of process */
     explicit Process(std::string_view executable);
@@ -29,8 +31,8 @@ public:
     void terminate() const noexcept;
 
 private:
-    Process(Process const & p);
-    Process & operator=(Process const &p);
+    Process(Process const &p);
+    Process &operator=(Process const &p);
 
     Pipe m_pipeParent;
     Pipe m_pipeChild;
@@ -38,4 +40,4 @@ private:
     pid_t m_pid;
 };
 
-}  // namespace process
+} // namespace process

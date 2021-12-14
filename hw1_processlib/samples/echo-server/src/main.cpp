@@ -1,16 +1,20 @@
-#include <iostream>
-#include <string>
-#include <exception>
-#include <memory>
-#include "process.h"
 #include "pipe.h"
+#include "process.h"
+#include <exception>
+#include <iostream>
+#include <memory>
+#include <string>
 
-int main() {
+int main()
+{
     std::unique_ptr<process::Process> process;
 
-    try {
+    try
+    {
         process = std::make_unique<process::Process>("/bin/cat");
-    } catch (const std::exception& e) {
+    }
+    catch (const std::exception &e)
+    {
         std::cerr << "Error in process initialisation" << std::endl;
         std::cerr << e.what() << std::endl;
         process->terminate();
@@ -19,8 +23,10 @@ int main() {
 
     std::string buffer;
 
-    try {
-        while (std::getline(std::cin, buffer)) {
+    try
+    {
+        while (std::getline(std::cin, buffer))
+        {
             std::string voidBuffer;
             voidBuffer.resize(buffer.size());
             size_t bytes;
@@ -49,8 +55,10 @@ int main() {
 
             std::cout << "----------------" << std::endl;
         }
-    } catch(std::exception& e) {
-        std::cerr << e.what() <<std::endl;
+    }
+    catch (std::exception &e)
+    {
+        std::cerr << e.what() << std::endl;
     }
 
     std::cerr << "Eof received, stop" << std::endl;
