@@ -9,6 +9,9 @@ disable_in_source_builds()
 # == Project ==
 project(ADVANCEDCPP LANGUAGES CXX)
 
+# == Third party ==
+add_subdirectory(third_party)
+
 # == C++ lang setup ==
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
