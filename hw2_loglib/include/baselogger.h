@@ -1,32 +1,31 @@
-#ifndef LOGLIB_BASELOGGER_H
-#define LOGLIB_BASELOGGER_H
+#pragma once
 
-#include <iostream>
-#include "loglib/loglevel.h"
+#include "loglevel.h"
+#include <string_view>
 
-namespace log {
+namespace log
+{
 
-class BaseLogger {
+class BaseLogger
+{
 public:
     BaseLogger() = delete;
-    explicit BaseLogger(Level const& level);
+    explicit BaseLogger(Level const &level);
     virtual ~BaseLogger() noexcept;
 
-    virtual void debug(std::string_view msg) final;
-    virtual void info(std::string_view msg) final;
-    virtual void warn(std::string_view msg) final;
-    virtual void error(std::string_view msg) final;
+    virtual void debug(std::string_view msg);
+    virtual void info(std::string_view msg);
+    virtual void warn(std::string_view msg);
+    virtual void error(std::string_view msg);
 
-    virtual void set_level(Level const& level) noexcept final;
-    virtual Level level() const noexcept final;
+    virtual void setLevel(Level const &level) noexcept;
+    virtual Level level() const noexcept;
 
     void flush();
 
 protected:
-    Level level_;
-    virtual void log(std::string_view msg, Level const& level) = 0;
+    Level m_level;
+    virtual void log(std::string_view msg, Level const &level) = 0;
 };
 
-}  // namespace log
-
-#endif  // LOGLIB_BASELOGGER_H
+} // namespace log

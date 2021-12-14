@@ -1,37 +1,49 @@
-#include "loglib/baselogger.h"
+#include "baselogger.h"
 
-namespace log {
+namespace log
+{
 
-BaseLogger::BaseLogger(Level const& level) : level_(level) {}
-
-BaseLogger::~BaseLogger() {}
-
-void BaseLogger::debug(std::string_view msg) {
-    log(msg, log::DEBUG);
+BaseLogger::BaseLogger(Level const &level) : m_level(level)
+{
 }
 
-void BaseLogger::info(std::string_view msg) {
-    log(msg, log::INFO);
+BaseLogger::~BaseLogger() noexcept
+{
 }
 
-void BaseLogger::warn(std::string_view msg) {
-    log(msg, log::WARNING);
+void BaseLogger::debug(std::string_view msg)
+{
+    log(msg, log::Level::DEBUG);
 }
 
-void BaseLogger::error(std::string_view msg) {
-    log(msg, log::ERROR);
+void BaseLogger::info(std::string_view msg)
+{
+    log(msg, log::Level::INFO);
 }
 
-void BaseLogger::set_level(Level const& level) noexcept {
-    level_ = level;
+void BaseLogger::warn(std::string_view msg)
+{
+    log(msg, log::Level::WARNING);
 }
 
-Level BaseLogger::level() const noexcept {
-    return level_;
+void BaseLogger::error(std::string_view msg)
+{
+    log(msg, log::Level::ERROR);
 }
 
-void BaseLogger::flush() {
+void BaseLogger::setLevel(Level const &level) noexcept
+{
+    m_level = level;
+}
+
+Level BaseLogger::level() const noexcept
+{
+    return m_level;
+}
+
+void BaseLogger::flush()
+{
     // TODO
 }
 
-}  // namespace log
+} // namespace log

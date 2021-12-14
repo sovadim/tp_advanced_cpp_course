@@ -1,12 +1,15 @@
+#include "stderrlogger.h"
 #include <iostream>
-#include "loglib/stderrlogger.h"
 
-namespace log {
+namespace log
+{
 
-void StderrLogger::log(std::string const& msg, Level const& level) {
-    if (level >= level_) {
+void StderrLogger::log(std::string_view msg, Level const &level)
+{
+    if (level >= m_level)
+    {
         std::cerr << msg << std::endl;
     }
 }
 
-}  // namespace log
+} // namespace log

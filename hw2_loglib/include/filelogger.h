@@ -1,20 +1,19 @@
-#ifndef LOGLIB_FILELOGGER_H
-#define LOGLIB_FILELOGGER_H
+#pragma once
 
+#include "baselogger.h"
 #include <fstream>
-#include "loglib/baselogger.h"
 
-namespace log {
+namespace log
+{
 
-class FileLogger : public BaseLogger {
+class FileLogger : public BaseLogger
+{
 public:
-    FileLogger(std::string_view filename, Level const& level);
-    void log(std::string_view msg, Level const& level) override;
+    FileLogger(std::string_view filename, Level const &level);
+    void log(std::string_view msg, Level const &level) override;
 
 private:
     std::ofstream ofstream;
 };
-    
-}  // namespace log
 
-#endif  // LOGLIB_FILELOGGER_H
+} // namespace log

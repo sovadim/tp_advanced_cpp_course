@@ -1,10 +1,8 @@
-#ifndef LOGLIB_EXCEPTIONS_H
-#define LOGLIB_EXCEPTIONS_H
+#pragma once
 
-namespace log {
+namespace log
+{
 
-// TODO
+// TODO: specify exceptions of library
 
-}  // namespace log
-
-#endif  // LOGLIB_EXCEPTIONS_H
+} // namespace log

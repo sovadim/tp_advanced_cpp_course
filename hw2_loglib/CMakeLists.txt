@@ -11,10 +11,8 @@ set(SOURCES
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
 target_include_directories(${PROJECT_NAME}
-    PUBLIC
+    PRIVATE
         ${PROJECT_SOURCE_DIR}/include
 )
 
-add_subdirectory(samples)
-
-add_subdirectory(tests)
+add_subdirectory(unit_tests)

@@ -1,12 +1,15 @@
+#include "stdoutlogger.h"
 #include <iostream>
-#include "loglib/stdoutlogger.h"
 
-namespace log {
+namespace log
+{
 
-void StdoutLogger::log(std::string const& msg, Level const& level) {
-    if (level >= level_) {
+void StdoutLogger::log(std::string_view msg, Level const &level)
+{
+    if (level >= m_level)
+    {
         std::cout << msg << std::endl;
     }
 }
 
-}  // namespace log
+} // namespace log

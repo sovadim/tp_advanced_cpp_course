@@ -1,12 +1,15 @@
+#include "filelogger.h"
 #include <iostream>
-#include "loglib/filelogger.h"
 
-namespace log {
+namespace log
+{
 
-void FileLogger::log(std::string const& msg, Level const& level) {
-    if (level >= level_) {
+void FileLogger::log(std::string_view msg, Level const &level)
+{
+    if (level >= m_level)
+    {
         ofstream << msg << std::endl;
     }
 }
 
-}  // namespace log
+} // namespace log
