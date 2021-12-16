@@ -34,20 +34,23 @@ int main()
             std::cout << "----------------" << std::endl;
             std::cout << "=== write / read ===" << std::endl;
 
-            bytes = process->write({reinterpret_cast<const std::byte *>(buffer.c_str()), buffer.size()});
+            bytes = process->write(
+                {reinterpret_cast<const std::byte *>(buffer.c_str()), buffer.size()});
 
             std::cout << "\nsent:" << std::endl;
             std::cout << "- data: " << buffer << std::endl;
             std::cout << "- bytes: " << bytes << std::endl;
 
-            bytes = process->read({reinterpret_cast<std::byte *>(voidBuffer.data()), buffer.size()});
+            bytes =
+                process->read({reinterpret_cast<std::byte *>(voidBuffer.data()), buffer.size()});
             std::cout << "received:" << std::endl;
             std::cout << "- data: " << voidBuffer << std::endl;
             std::cout << "- bytes: " << bytes << std::endl;
 
             std::cout << "\n=== writeExact / readExact ===" << std::endl;
 
-            process->writeExact({reinterpret_cast<const std::byte *>(buffer.c_str()), buffer.size()});
+            process->writeExact(
+                {reinterpret_cast<const std::byte *>(buffer.c_str()), buffer.size()});
             std::cout << "\nsent:" << buffer << std::endl;
 
             process->readExact({reinterpret_cast<std::byte *>(voidBuffer.data()), buffer.size()});
