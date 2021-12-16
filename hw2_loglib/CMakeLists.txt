@@ -15,4 +15,4 @@ target_include_directories(${PROJECT_NAME}
         ${PROJECT_SOURCE_DIR}/include
 )
 
-add_subdirectory(unit_tests)
+add_subdirectory(tests)

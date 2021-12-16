@@ -21,3 +21,4 @@
 - [ ] StdoutLogger
 - [ ] StderrLogger
 - [ ] Exceptions
+- [ ] Tests

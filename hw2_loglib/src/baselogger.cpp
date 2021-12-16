@@ -1,15 +1,7 @@
-#include "baselogger.h"
+#include <baselogger.h>
 
 namespace log
 {
-
-BaseLogger::BaseLogger(Level const &level) : m_level(level)
-{
-}
-
-BaseLogger::~BaseLogger() noexcept
-{
-}
 
 void BaseLogger::debug(std::string_view msg)
 {
@@ -43,7 +35,6 @@ Level BaseLogger::level() const noexcept
 
 void BaseLogger::flush()
 {
-    // TODO
 }
 
 } // namespace log

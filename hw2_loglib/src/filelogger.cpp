@@ -1,4 +1,5 @@
-#include "filelogger.h"
+#include <exceptions.h>
+#include <filelogger.h>
 #include <iostream>
 
 namespace log
@@ -10,6 +11,11 @@ void FileLogger::log(std::string_view msg, Level const &level)
     {
         ofstream << msg << std::endl;
     }
+}
+
+void FileLogger::flush()
+{
+    ofstream << std::flush;
 }
 
 } // namespace log

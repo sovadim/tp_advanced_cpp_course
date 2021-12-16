@@ -1,6 +1,6 @@
 #pragma once
 
-#include "loglevel.h"
+#include <loglevel.h>
 #include <string_view>
 
 namespace log
@@ -9,7 +9,6 @@ namespace log
 class BaseLogger
 {
 public:
-    BaseLogger() = delete;
     explicit BaseLogger(Level const &level);
     virtual ~BaseLogger() noexcept;
 
@@ -21,7 +20,7 @@ public:
     virtual void setLevel(Level const &level) noexcept;
     virtual Level level() const noexcept;
 
-    void flush();
+    virtual void flush();
 
 protected:
     Level m_level;
