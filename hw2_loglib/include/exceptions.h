@@ -5,10 +5,20 @@
 namespace log
 {
 
-class FileNotFoundError : public std::runtime_error
+class BaseLoglibException : public std::runtime_error
 {
 public:
-    FileNotFoundError(const std::string &path) : std::runtime_error("File <" + path + "> not found")
+    BaseLoglibException(const std::string &message) : std::runtime_error{message}
+    {
+    }
+
+    virtual ~BaseLoglibException() noexcept = default;
+};
+
+class FlushException : public BaseLoglibException
+{
+public:
+    FlushException() : BaseLoglibException{"std::flush caused an exception"}
     {
     }
 };

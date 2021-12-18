@@ -1,9 +1,9 @@
+#include <filesystem>
 #include <gtest/gtest.h>
 #include <loglevel.h>
 #include <loglib.h>
-#include <string_view>
 #include <sstream>
-#include <filesystem>
+#include <string_view>
 
 namespace fs = std::filesystem;
 
@@ -32,15 +32,15 @@ protected:
     {
         return fs::exists(filename);
     }
-    
+
     bool log_is_empty()
     {
         return fs::is_empty(filename);
     }
 
-    static constexpr std::string_view filename {"test_filelogger.log"};
-    static constexpr std::string_view raw_message {"message"};
-    static constexpr std::string_view expected_message {"message\n"};
+    static constexpr std::string_view filename{"test_filelogger.log"};
+    static constexpr std::string_view raw_message{"message"};
+    static constexpr std::string_view expected_message{"message\n"};
 };
 
 TEST_F(FileLoggerTest, LoggerCreatesFile)

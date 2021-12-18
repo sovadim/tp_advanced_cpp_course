@@ -6,8 +6,8 @@
 class StderrLoggerTest : public ::testing::Test
 {
 protected:
-    static constexpr std::string_view raw_message {"message"};
-    static constexpr std::string_view expected_message {"message\n"};
+    static constexpr std::string_view raw_message{"message"};
+    static constexpr std::string_view expected_message{"message\n"};
 };
 
 TEST_F(StderrLoggerTest, LevelErrorWritesError)

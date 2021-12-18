@@ -9,7 +9,13 @@ BaseLogger::BaseLogger(Level const &level) : m_level{level}
 
 BaseLogger::~BaseLogger() noexcept
 {
-    flush();
+    try
+    {
+        flush();
+    }
+    catch (const std::exception &)
+    {
+    }
 }
 
 void BaseLogger::debug(std::string_view msg)

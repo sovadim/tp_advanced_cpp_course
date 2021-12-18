@@ -1,3 +1,4 @@
+#include <exceptions.h>
 #include <iostream>
 #include <stdoutlogger.h>
 
@@ -18,7 +19,14 @@ void StdoutLogger::log(std::string_view msg, Level const &level)
 
 void StdoutLogger::flush()
 {
-    std::cout << std::flush;
+    try
+    {
+        std::cout << std::flush;
+    }
+    catch (const std::exception &e)
+    {
+        throw FlushException();
+    }
 }
 
 } // namespace log

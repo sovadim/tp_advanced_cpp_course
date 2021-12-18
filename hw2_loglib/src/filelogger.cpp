@@ -5,9 +5,9 @@
 namespace log
 {
 
-FileLogger::FileLogger(std::string_view filename, Level const &level) : BaseLogger{level}, ofstream_{filename.data()}
+FileLogger::FileLogger(std::string_view filename, Level const &level)
+    : BaseLogger{level}, ofstream_{filename.data()}
 {
-    // create ofstream
 }
 
 void FileLogger::log(std::string_view msg, Level const &level)
@@ -20,7 +20,14 @@ void FileLogger::log(std::string_view msg, Level const &level)
 
 void FileLogger::flush()
 {
-    ofstream_ << std::flush;
+    try
+    {
+        ofstream_ << std::flush;
+    }
+    catch (const std::exception &e)
+    {
+        throw FlushException();
+    }
 }
 
 } // namespace log

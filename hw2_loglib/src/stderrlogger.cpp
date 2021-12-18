@@ -1,3 +1,4 @@
+#include <exceptions.h>
 #include <iostream>
 #include <stderrlogger.h>
 
@@ -18,7 +19,14 @@ void StderrLogger::log(std::string_view msg, Level const &level)
 
 void StderrLogger::flush()
 {
-    std::cerr << std::flush;
+    try
+    {
+        std::cerr << std::flush;
+    }
+    catch (const std::exception &e)
+    {
+        throw FlushException();
+    }
 }
 
 } // namespace log
