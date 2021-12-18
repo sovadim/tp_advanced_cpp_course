@@ -17,8 +17,8 @@
 
 - [x] Logger
 - [x] BaseLogger
-- [ ] FileLogger
+- [x] FileLogger
 - [x] StdoutLogger
 - [x] StderrLogger
 - [ ] Exceptions
-- [ ] Tests
+- [x] Tests

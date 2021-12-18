@@ -14,7 +14,7 @@ public:
     void flush() override;
 
 private:
-    std::ofstream ofstream;
+    std::ofstream ofstream_;
 };
 
 } // namespace log

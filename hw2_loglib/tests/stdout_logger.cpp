@@ -6,8 +6,8 @@
 class StdoutLoggerTest : public ::testing::Test
 {
 protected:
-    static constexpr std::string_view raw_message {"raw_message"};
-    static constexpr std::string_view expected_message {"raw_message\n"};
+    static constexpr std::string_view raw_message {"message"};
+    static constexpr std::string_view expected_message {"message\n"};
 };
 
 TEST_F(StdoutLoggerTest, LevelErrorWritesError)

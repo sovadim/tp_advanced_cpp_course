@@ -47,4 +47,9 @@ inline void error(std::string_view msg)
     Logger::getInstance().getGlobalLogger()->error(msg);
 }
 
+inline void flush()
+{
+    Logger::getInstance().getGlobalLogger()->flush();
+}
+
 } // namespace log
