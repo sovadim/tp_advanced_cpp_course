@@ -1,17 +1,19 @@
-
-add_executable(loglib_tests loglib_test.cpp)
+project(loglib_tests)
 
 add_test(
-    NAME loglib_tests
-    COMMAND run_loglib_tests
+    NAME ${PROJECT_NAME}
+    COMMAND ${PROJECT_NAME}
 )
 
-target_include_directories(loglib_tests
-    PRIVATE
-        ${PROJECT_SOURCE_DIR}/include
+set(SOURCES
+    file_logger.cpp
+    stderr_logger.cpp
+    stdout_logger.cpp
 )
 
-target_link_libraries(
-    loglib_tests
+add_executable(${PROJECT_NAME} ${SOURCES})
+
+target_link_libraries(${PROJECT_NAME}
+    loglib
     gtest_main
 )

@@ -5,11 +5,16 @@
 namespace log
 {
 
+FileLogger::FileLogger(std::string_view /*filename*/, Level const &level) : BaseLogger(level)
+{
+    // create ofstream
+}
+
 void FileLogger::log(std::string_view msg, Level const &level)
 {
     if (level >= m_level)
     {
-        ofstream << msg << std::endl;
+        ofstream << msg << "\n";
     }
 }
 

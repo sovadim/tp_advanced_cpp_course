@@ -11,7 +11,7 @@ set(SOURCES
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
 target_include_directories(${PROJECT_NAME}
-    PRIVATE
+    PUBLIC
         ${PROJECT_SOURCE_DIR}/include
 )
 

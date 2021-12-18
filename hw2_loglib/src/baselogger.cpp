@@ -3,6 +3,15 @@
 namespace log
 {
 
+BaseLogger::BaseLogger(Level const &level) : m_level{level}
+{
+}
+
+BaseLogger::~BaseLogger() noexcept
+{
+    flush();
+}
+
 void BaseLogger::debug(std::string_view msg)
 {
     log(msg, log::Level::DEBUG);

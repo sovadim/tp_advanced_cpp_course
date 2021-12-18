@@ -4,11 +4,15 @@
 namespace log
 {
 
+StdoutLogger::StdoutLogger(Level const &level) : BaseLogger(level)
+{
+}
+
 void StdoutLogger::log(std::string_view msg, Level const &level)
 {
     if (level >= m_level)
     {
-        std::cout << msg << std::endl;
+        std::cout << msg << "\n";
     }
 }
 

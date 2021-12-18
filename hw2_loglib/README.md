@@ -15,10 +15,10 @@
 
 ## Implementation progress
 
-- [ ] Logger
-- [ ] BaseLogger
+- [x] Logger
+- [x] BaseLogger
 - [ ] FileLogger
-- [ ] StdoutLogger
-- [ ] StderrLogger
+- [x] StdoutLogger
+- [x] StderrLogger
 - [ ] Exceptions
 - [ ] Tests
