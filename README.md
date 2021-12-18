@@ -7,7 +7,7 @@ Technopark mail.ru, 2020
 # Homework progress:
 
 - [x] 1. processlib
-- [ ] 2. loglib
+- [x] 2. loglib
 - [ ] 3.
 - [ ] 4.
 - [ ] 5.
