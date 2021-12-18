@@ -29,5 +29,5 @@ include(CTest)
 
 # == Targets ==
 add_subdirectory(entrance_task)
-add_subdirectory(hw1_processlib)
-add_subdirectory(hw2_loglib)
+add_subdirectory(hw1_process)
+add_subdirectory(hw2_log)
