@@ -20,8 +20,8 @@ public:
         return instance;
     }
 
-    std::shared_ptr<BaseLogger> getGlobalLogger() const;
-    void setGlobalLogger(std::unique_ptr<BaseLogger> logger);
+    std::shared_ptr<BaseLogger> getGlobalLogger() const noexcept;
+    void setGlobalLogger(std::unique_ptr<BaseLogger> logger) noexcept;
 
 private:
     Logger(){};

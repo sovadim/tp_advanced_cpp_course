@@ -25,7 +25,7 @@ void StderrLogger::flush()
     }
     catch (const std::exception &e)
     {
-        throw FlushException();
+        throw FlushError();
     }
 }
 

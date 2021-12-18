@@ -26,7 +26,7 @@ void FileLogger::flush()
     }
     catch (const std::exception &e)
     {
-        throw FlushException();
+        throw FlushError();
     }
 }
 

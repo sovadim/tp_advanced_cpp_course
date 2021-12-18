@@ -5,20 +5,20 @@
 namespace log
 {
 
-class BaseLoglibException : public std::runtime_error
+class BaseLoglibError : public std::runtime_error
 {
 public:
-    BaseLoglibException(const std::string &message) : std::runtime_error{message}
+    BaseLoglibError(const std::string &message) : std::runtime_error{message}
     {
     }
 
-    virtual ~BaseLoglibException() noexcept = default;
+    virtual ~BaseLoglibError() noexcept = default;
 };
 
-class FlushException : public BaseLoglibException
+class FlushError : public BaseLoglibError
 {
 public:
-    FlushException() : BaseLoglibException{"std::flush caused an exception"}
+    FlushError() : BaseLoglibError{"std::flush caused an exception"}
     {
     }
 };

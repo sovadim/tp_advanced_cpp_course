@@ -9,7 +9,7 @@ namespace log
 class BaseLogger
 {
 public:
-    explicit BaseLogger(Level const &level);
+    explicit BaseLogger(Level const &level) noexcept;
     virtual ~BaseLogger() noexcept;
 
     virtual void debug(std::string_view msg);

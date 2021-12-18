@@ -20,5 +20,5 @@
 - [x] FileLogger
 - [x] StdoutLogger
 - [x] StderrLogger
-- [ ] Exceptions
+- [x] Exceptions
 - [x] Tests

@@ -3,7 +3,7 @@
 namespace log
 {
 
-BaseLogger::BaseLogger(Level const &level) : m_level{level}
+BaseLogger::BaseLogger(Level const &level) noexcept : m_level{level}
 {
 }
 
