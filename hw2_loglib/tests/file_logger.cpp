@@ -20,7 +20,7 @@ protected:
         fs::remove(filename);
     }
 
-    std::string read_log_file()
+    static std::string read_log_file()
     {
         std::ifstream ifstream{fs::path(filename)};
         std::stringstream buffer;
@@ -28,12 +28,12 @@ protected:
         return buffer.str();
     }
 
-    bool file_exists()
+    static bool file_exists()
     {
         return fs::exists(filename);
     }
 
-    bool log_is_empty()
+    static bool log_is_empty()
     {
         return fs::is_empty(filename);
     }
